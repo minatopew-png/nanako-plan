@@ -494,9 +494,602 @@ footer {
   table { font-size: 0.8rem; }
   th, td { padding: 9px 10px; }
 }
+
+/* ===== SHARE / GEO TOOLBAR ===== */
+.toolbar-share {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+.fab-btn {
+  background: linear-gradient(135deg, var(--kg-blue), var(--kg-blue-light));
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,51,102,0.35);
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.fab-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,51,102,0.45); }
+.fab-btn.gold { background: linear-gradient(135deg, #c5a059, #e8c97a); color: #1a1a1a; }
+.fab-btn.green { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+/* ===== TOAST ===== */
+#toast {
+  position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+  background: #1a1a2e; color: white; padding: 12px 28px;
+  border-radius: 50px; font-size: 0.9rem; font-weight: 700;
+  z-index: 99999; opacity: 0; transition: opacity 0.3s;
+  pointer-events: none; white-space: nowrap;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+}
+#toast.show { opacity: 1; }
+/* ===== GEO PANEL ===== */
+.geo-panel {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  border-radius: 14px;
+  padding: 18px 20px;
+  border: 1px solid #90caf9;
+  margin-bottom: 20px;
+}
+.geo-panel h4 { color: #1565c0; margin-bottom: 10px; font-size: 0.95rem; }
+.geo-result {
+  font-size: 0.85rem; color: #333; line-height: 1.8;
+  background: white; border-radius: 10px; padding: 12px 14px;
+  margin-top: 10px; display: none;
+}
+.geo-result.show { display: block; }
+/* ===== CHECKLIST ===== */
+.checklist-category {
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.checklist-cat-header {
+  background: linear-gradient(135deg, var(--kg-blue), var(--kg-blue-light));
+  color: white;
+  padding: 13px 18px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.checklist-cat-header:hover { opacity: 0.92; }
+.cat-title { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+.cat-progress-badge {
+  background: rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.checklist-cat-body { background: #fafafa; }
+.checklist-item-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+  transition: background 0.15s;
+}
+.checklist-item-row:hover { background: #f5f9ff; }
+.checklist-item-row.done { opacity: 0.55; }
+.cl-checkbox {
+  width: 20px; height: 20px; cursor: pointer;
+  accent-color: var(--kg-blue); flex-shrink: 0;
+}
+.cl-text {
+  border: 1px solid #ddd; border-radius: 7px;
+  padding: 4px 9px; font-size: 0.84rem; flex: 1;
+  min-width: 140px; font-family: 'Noto Sans JP', sans-serif;
+  background: white; color: #333;
+}
+.cl-text:focus { border-color: var(--kg-blue); outline: none; }
+.cl-offset-label { font-size: 0.76rem; color: #888; white-space: nowrap; }
+.cl-offset {
+  border: 1px solid #ddd; border-radius: 7px;
+  padding: 4px 7px; font-size: 0.83rem; width: 62px;
+  text-align: center; font-family: 'Noto Sans JP', sans-serif;
+}
+.cl-offset:focus { border-color: var(--kg-gold); outline: none; }
+.cl-deadline {
+  font-size: 0.76rem; background: #e3f2fd; color: #1565c0;
+  border-radius: 7px; padding: 3px 8px; white-space: nowrap;
+}
+.cl-badge {
+  font-size: 0.74rem; border-radius: 7px;
+  padding: 3px 8px; font-weight: 700; white-space: nowrap;
+}
+.cl-badge.red    { background: #ffebee; color: #c62828; }
+.cl-badge.yellow { background: #fff8e1; color: #f57f17; }
+.cl-badge.green  { background: #e8f5e9; color: #2e7d32; }
+.cl-badge.grey   { background: #f5f5f5; color: #757575; }
+.cl-del-btn {
+  background: #ffebee; color: #c62828; border: none;
+  border-radius: 7px; padding: 3px 9px; cursor: pointer;
+  font-size: 0.75rem; transition: background 0.15s; flex-shrink: 0;
+}
+.cl-del-btn:hover { background: #ffcdd2; }
+.cl-add-btn {
+  margin: 10px 14px;
+  background: white; border: 2px dashed var(--kg-blue);
+  color: var(--kg-blue); border-radius: 10px;
+  padding: 7px 16px; cursor: pointer;
+  font-size: 0.82rem; font-weight: 700;
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: all 0.15s;
+}
+.cl-add-btn:hover { background: var(--kg-blue); color: white; }
+/* ===== PROGRESS BAR (CHECKLIST) ===== */
+.cl-progress-wrap { margin: 0 0 18px 0; }
+.cl-progress-bar-bg {
+  background: #e0e0e0; border-radius: 20px;
+  height: 12px; overflow: hidden; margin-top: 6px;
+}
+.cl-progress-bar-fill {
+  background: linear-gradient(90deg, var(--kg-blue), var(--kg-gold));
+  height: 100%; border-radius: 20px; transition: width 0.4s;
+}
+/* ===== RETURN PLAN ===== */
+.return-info-banner {
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  border-left: 5px solid #43a047;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 0.88rem;
+}
+.return-cost-table input[type="text"],
+.return-cost-table input[type="number"],
+.return-cost-table select {
+  border: 1px solid #c5d4f0;
+  border-radius: 7px;
+  padding: 4px 8px;
+  font-size: 0.83rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  background: white;
+}
+.return-cost-table input[type="text"] { width: 100%; min-width: 120px; }
+.return-cost-table input[type="number"] { width: 80px; text-align: right; }
+.return-cost-table select { width: 75px; }
+.return-total-row { background: #e3f2fd !important; font-weight: 900; font-size: 1.0rem; }
+.route-flow {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 6px; font-weight: 700; color: var(--kg-blue);
+  background: #f0f4ff; border-radius: 12px; padding: 14px 18px;
+  margin: 16px 0; font-size: 0.9rem;
+}
+.route-arrow { color: #aaa; font-weight: 400; font-size: 0.85rem; }
+/* ===== EDITABLE FINANCE ===== */
+.finance-input {
+  border: 1px solid #c5d4f0;
+  border-radius: 7px;
+  padding: 4px 8px;
+  font-size: 0.87rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  background: white;
+  transition: border-color 0.2s;
+}
+.finance-input:focus { border-color: var(--kg-gold); outline: none; }
+.finance-input.wide { width: 100%; }
+.finance-input.num { width: 90px; text-align: right; }
+.add-row-btn {
+  background: white; border: 2px dashed var(--kg-blue);
+  color: var(--kg-blue); border-radius: 10px;
+  padding: 7px 18px; cursor: pointer;
+  font-size: 0.82rem; font-weight: 700;
+  font-family: 'Noto Sans JP', sans-serif;
+  margin: 8px 0; transition: all 0.15s;
+}
+.add-row-btn:hover { background: var(--kg-blue); color: white; }
+.del-row-btn {
+  background: #ffebee; color: #c62828; border: none;
+  border-radius: 7px; padding: 3px 9px; cursor: pointer;
+  font-size: 0.75rem;
+}
+.del-row-btn:hover { background: #ffcdd2; }
+/* mobile fix */
+@media (max-width:640px) {
+  .toolbar-share { bottom: 14px; right: 14px; }
+  .fab-btn { font-size: 0.78rem; padding: 10px 16px; }
+  .checklist-item-row { gap: 6px; }
+}
+
+/* ===== 重要事項モーダル ===== */
+#notice-modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,20,60,0.72);
+  z-index: 9000;
+  align-items: center; justify-content: center;
+}
+#notice-modal-overlay.open { display: flex; }
+#notice-modal {
+  background: #fff;
+  border-radius: 20px;
+  max-width: 720px; width: 92%;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 28px 28px 22px;
+  box-shadow: 0 24px 80px rgba(0,51,102,0.35);
+  position: relative;
+  animation: modalIn .28s cubic-bezier(.22,1,.36,1);
+}
+@keyframes modalIn {
+  from { opacity:0; transform:translateY(30px) scale(.97); }
+  to   { opacity:1; transform:translateY(0)    scale(1);   }
+}
+.notice-close-btn {
+  position: absolute; top: 14px; right: 18px;
+  background: none; border: none; font-size: 1.5rem;
+  cursor: pointer; color: #888; line-height: 1;
+}
+.notice-close-btn:hover { color: var(--kg-blue); }
+.notice-section-title {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--kg-blue); font-size: 1rem; font-weight: 900;
+  margin: 18px 0 8px; border-left: 4px solid var(--kg-gold);
+  padding-left: 10px;
+}
+.notice-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 10px;
+}
+@media(max-width:520px){ .notice-grid { grid-template-columns: 1fr; } }
+.notice-card {
+  background: #f0f6ff;
+  border-radius: 12px; padding: 12px 14px;
+  font-size: 0.83rem; line-height: 1.8;
+  border: 1px solid #d0e4f8;
+}
+.notice-card h4 { color: var(--kg-blue); margin: 0 0 6px; font-size: 0.88rem; }
+.notice-badge {
+  display: inline-block; border-radius: 20px; padding: 2px 10px;
+  font-size: 0.75rem; font-weight: 700; margin: 2px 3px;
+}
+.badge-ok   { background:#e8f5e9; color:#2e7d32; }
+.badge-warn { background:#fff3e0; color:#e65100; }
+.notice-github-steps {
+  background: #1a237e; color: #e8eaf6;
+  border-radius: 12px; padding: 14px 18px;
+  font-size: 0.82rem; font-family: 'Courier New', monospace;
+  line-height: 2.0; margin-top: 6px;
+}
+.notice-github-steps b { color: var(--kg-gold-light); }
+.notice-open-btn {
+  position: fixed; bottom: 80px; left: 16px;
+  background: var(--kg-blue); color: white;
+  border: none; border-radius: 50%;
+  width: 48px; height: 48px; font-size: 1.3rem;
+  cursor: pointer; z-index: 8500;
+  box-shadow: 0 4px 16px rgba(0,51,102,0.4);
+  transition: transform .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.notice-open-btn:hover { transform: scale(1.12); }
+
+/* ===== フローティングナビ ===== */
+#float-nav {
+  position: fixed; bottom: 136px; right: 16px;
+  z-index: 8400;
+}
+.float-nav-toggle {
+  width: 50px; height: 50px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--kg-blue), #0a4a8a);
+  color: white; border: none; font-size: 1.4rem;
+  cursor: pointer; box-shadow: 0 4px 18px rgba(0,51,102,0.4);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .2s;
+}
+.float-nav-toggle:hover { transform: scale(1.08) rotate(15deg); }
+#float-nav-menu {
+  display: none; flex-direction: column;
+  gap: 6px; margin-bottom: 10px;
+  align-items: flex-end;
+}
+#float-nav-menu.open { display: flex; }
+.float-nav-link {
+  background: white; color: var(--kg-blue);
+  border: 2px solid var(--kg-blue);
+  border-radius: 24px; padding: 6px 14px;
+  font-size: 0.78rem; font-weight: 700;
+  text-decoration: none; white-space: nowrap;
+  box-shadow: 0 3px 12px rgba(0,51,102,0.18);
+  transition: background .2s, color .2s;
+}
+.float-nav-link:hover { background: var(--kg-blue); color: white; }
+.float-nav-link.active-section {
+  background: var(--kg-gold); color: var(--kg-blue);
+  border-color: var(--kg-gold);
+}
+
+/* ===== ▲ TOPボタン ===== */
+#back-to-top {
+  position: fixed; bottom: 76px; right: 16px;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--kg-gold); color: var(--kg-blue);
+  border: none; font-size: 1.2rem; font-weight: 900;
+  cursor: pointer; z-index: 8300;
+  box-shadow: 0 4px 14px rgba(197,160,89,0.5);
+  display: none; align-items: center; justify-content: center;
+  transition: transform .2s, opacity .3s;
+}
+#back-to-top.show { display: flex; }
+#back-to-top:hover { transform: scale(1.1) translateY(-3px); }
+
+/* ===== 為替ライブバッジ ===== */
+#fx-live-badge {
+  font-size: 0.78rem; color: #1565c0;
+  background: #e3f2fd; border-radius: 20px;
+  padding: 3px 12px; display: inline-block;
+  margin-top: 6px; border: 1px solid #90caf9;
+}
+.fx-refresh-btn {
+  margin-left: 8px; background: var(--kg-blue);
+  color: white; border: none; border-radius: 12px;
+  padding: 3px 10px; font-size: 0.74rem;
+  cursor: pointer; vertical-align: middle;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* ===== 共有パネル改善 ===== */
+.share-status-bar {
+  background: #e8f5e9; border: 1px solid #a5d6a7;
+  border-radius: 10px; padding: 8px 14px;
+  font-size: 0.8rem; color: #2e7d32;
+  margin-top: 8px; display: none;
+}
+.share-status-bar.show { display: block; }
+
+
+/* ===== R-12: EMERGENCY SECTION ===== */
+#emergency { scroll-margin-top: 160px; }
+.emg-intro { background: linear-gradient(135deg,#ffe0e0,#fff5f5); border-left:5px solid #e74c3c; border-radius:12px; padding:16px 20px; margin-bottom:24px; }
+.emg-hotline { display:flex; flex-wrap:wrap; gap:10px; margin:16px 0; }
+.emg-hotline-btn { display:flex; align-items:center; gap:8px; background:#e74c3c; color:white; border:none; border-radius:10px; padding:12px 18px; font-size:1rem; font-weight:700; cursor:pointer; text-decoration:none; transition:transform .2s,box-shadow .2s; }
+.emg-hotline-btn:hover { transform:scale(1.04); box-shadow:0 4px 15px rgba(231,76,60,0.4); }
+.emg-hotline-btn.secondary { background:#2980b9; }
+.emg-hotline-btn.green { background:#27ae60; }
+.emg-hotline-btn.amber { background:#e67e22; }
+.emg-contact-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; margin:18px 0; }
+.emg-contact-card { background:white; border:1.5px solid #ddd; border-radius:12px; padding:14px 16px; }
+.emg-contact-card.urgent { border-color:#e74c3c; background:#fff8f8; }
+.emg-contact-card h4 { margin:0 0 8px; font-size:0.95rem; color:#444; }
+.emg-contact-input { width:100%; border:1.5px solid #ccc; border-radius:8px; padding:8px 10px; font-size:1rem; font-family:inherit; box-sizing:border-box; }
+.emg-contact-input:focus { border-color:var(--kg-blue); outline:none; }
+.emg-copy-btn { margin-top:6px; background:var(--kg-blue); color:white; border:none; border-radius:8px; padding:5px 12px; font-size:0.82rem; cursor:pointer; }
+.emg-copy-btn:hover { opacity:.85; }
+.emg-accordion { margin:20px 0; }
+.emg-acc-item { border:1.5px solid #e0e0e0; border-radius:12px; margin-bottom:10px; overflow:hidden; }
+.emg-acc-header { display:flex; justify-content:space-between; align-items:center; padding:14px 18px; cursor:pointer; background:#f9f9f9; font-weight:700; font-size:0.95rem; transition:background .2s; }
+.emg-acc-header:hover { background:#f0f0f0; }
+.emg-acc-header .badge { font-size:0.78rem; background:#e74c3c; color:white; border-radius:20px; padding:2px 10px; }
+.emg-acc-header .badge.amber { background:#e67e22; }
+.emg-acc-header .badge.blue { background:#2980b9; }
+.emg-acc-body { display:none; padding:16px 18px; background:white; font-size:0.9rem; line-height:1.8; }
+.emg-acc-body.open { display:block; }
+.emg-acc-body ol { padding-left:20px; }
+.emg-acc-body li { margin-bottom:6px; }
+.emg-acc-chevron { transition:transform .25s; }
+.emg-acc-item.open .emg-acc-chevron { transform:rotate(180deg); }
+.emg-remit { background:linear-gradient(135deg,#e8f4fd,#f0faf5); border-radius:14px; padding:20px; margin-top:24px; }
+.emg-remit h3 { color:var(--kg-blue); margin-bottom:16px; }
+.remit-calc { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.remit-input-group { display:flex; flex-direction:column; gap:6px; }
+.remit-input-group label { font-size:0.85rem; font-weight:700; color:#555; }
+.remit-input-group input, .remit-input-group select { border:1.5px solid #ccc; border-radius:8px; padding:9px 12px; font-size:1rem; font-family:inherit; }
+.remit-result { background:white; border-radius:12px; padding:16px; margin-top:16px; }
+.remit-method-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; margin-top:16px; }
+.remit-method-card { border-radius:12px; padding:14px; font-size:0.88rem; }
+.remit-method-card.best { background:#e8f5e9; border:2px solid #27ae60; }
+.remit-method-card.alt { background:#fff8e1; border:2px solid #f39c12; }
+.remit-method-card.last { background:#fce4ec; border:2px solid #e74c3c; }
+.remit-method-card .method-name { font-weight:900; font-size:1rem; margin-bottom:6px; }
+.remit-method-card .method-fee { font-size:0.82rem; color:#666; }
+.remit-deeplink { display:block; margin-top:10px; background:#27ae60; color:white; border:none; border-radius:8px; padding:8px 14px; text-align:center; font-weight:700; text-decoration:none; cursor:pointer; }
+.remit-deeplink:hover { opacity:.85; }
+.emg-memo-area { margin-top:20px; }
+
+/* ===== R-13: MOTHER FINANCE PANEL ===== */
+.mama-panel { background:linear-gradient(135deg,#fce4ec,#f3e5f5); border-radius:14px; padding:20px; margin-top:24px; border-left:5px solid #e91e8c; }
+.mama-enroll-row { display:flex; gap:16px; margin-bottom:16px; flex-wrap:wrap; background:rgba(233,30,140,0.08); border-radius:10px; padding:12px 14px; }
+.mama-enroll-cell { display:flex; flex-direction:column; gap:4px; flex:1; min-width:160px; }
+.mama-enroll-cell label { font-size:0.78rem; color:#880e4f; font-weight:600; }
+.mama-enroll-cell input[type=date] { border:1px solid #e91e8c; border-radius:6px; padding:5px 8px; font-size:0.9rem; background:#fff; color:#333; }
+.mama-enroll-cell span { font-size:1rem; padding:5px 0; }
+.mama-panel h3 { color:#880e4f; margin-bottom:16px; font-size:1.1rem; }
+.mama-parent-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.mama-parent-card { background:white; border-radius:12px; padding:16px; }
+.mama-parent-card.papa { border-top:4px solid var(--kg-blue); }
+.mama-parent-card.mama { border-top:4px solid #e91e8c; }
+.mama-parent-card h4 { margin:0 0 12px; font-size:1rem; }
+.mama-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; font-size:0.9rem; }
+.mama-row label { min-width:80px; color:#666; font-size:0.82rem; }
+.mama-row input { border:1.5px solid #ccc; border-radius:8px; padding:7px 10px; font-size:0.95rem; font-family:inherit; width:120px; }
+.mama-summary { background:white; border-radius:12px; padding:16px; margin-top:14px; }
+.mama-summary-row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px dashed #eee; font-size:0.92rem; }
+.mama-summary-row:last-child { border-bottom:none; font-weight:900; color:var(--kg-blue); }
+.mama-wise-note { font-size:0.82rem; color:#888; margin-top:4px; }
+.mama-coverage-bar { margin-top:12px; }
+.mama-bar-bg { background:#eee; border-radius:20px; height:16px; overflow:hidden; margin-top:6px; }
+.mama-bar-fill { background:linear-gradient(90deg,#e91e8c,var(--kg-blue)); height:100%; border-radius:20px; transition:width .6s; }
+@media(max-width:600px){
+  .mama-parent-grid { grid-template-columns:1fr; }
+  .remit-calc { grid-template-columns:1fr; }
+  .emg-contact-grid { grid-template-columns:1fr; }
+  .remit-method-grid { grid-template-columns:1fr; }
+}
+
+/* ===== R-14: CHANGELOG ===== */
+#changelog { scroll-margin-top: 160px; }
+.cl-timeline { margin:16px 0; }
+.cl-entry { display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid #f0f0f0; font-size:0.88rem; }
+.cl-entry:last-child { border-bottom:none; }
+.cl-time { min-width:130px; color:#888; font-size:0.8rem; font-family:monospace; }
+.cl-badge { min-width:40px; text-align:center; font-size:1rem; }
+.cl-field { flex:1; }
+.cl-field strong { color:var(--kg-blue); }
+.cl-diff { font-size:0.8rem; color:#888; margin-top:2px; }
+.cl-diff .old-val { color:#e74c3c; text-decoration:line-through; }
+.cl-diff .new-val { color:#27ae60; font-weight:700; }
+.cl-toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px; align-items:center; }
+.cl-filter-btns { display:flex; gap:6px; flex-wrap:wrap; }
+.cl-filter-btn { border:1.5px solid #ccc; background:white; border-radius:20px; padding:4px 14px; font-size:0.82rem; cursor:pointer; transition:all .2s; }
+.cl-filter-btn.active { background:var(--kg-blue); color:white; border-color:var(--kg-blue); }
+.cl-empty { text-align:center; color:#aaa; padding:40px 0; font-size:0.9rem; }
+.cl-action-btn { border:none; border-radius:8px; padding:8px 16px; font-size:0.85rem; cursor:pointer; font-weight:700; transition:opacity .2s; }
+.cl-action-btn:hover { opacity:.8; }
+.cl-action-btn.clear { background:#fce4ec; color:#c62828; }
+.cl-action-btn.csv { background:#e8f5e9; color:#1b5e20; }
+.cl-count { font-size:0.85rem; color:#888; }
+
 </style>
 </head>
 <body>
+
+
+<!-- ===== 重要事項説明モーダル ===== -->
+<div id="notice-modal-overlay">
+  <div id="notice-modal">
+    <button class="notice-close-btn" onclick="closeNotice()" aria-label="閉じる">✕</button>
+    <h2 style="color:var(--kg-blue);font-size:1.15rem;margin:0 0 4px;">
+      📋 <span lang="ja">このサイトの重要事項説明</span>
+      <span lang="en">Important Usage Guide</span>
+    </h2>
+    <p style="font-size:0.82rem;color:#666;margin-bottom:16px;" lang="ja">
+      NANAKOのNZ留学ライフプランナー ― お父さん・お母さん・NANAKOで共有する4年間の設計図です。
+    </p>
+    <p style="font-size:0.82rem;color:#666;margin-bottom:16px;" lang="en">
+      NANAKO's NZ Life Planner — a 4-year blueprint shared between NANAKO and her parents.
+    </p>
+
+    <!-- データ保存の仕組み -->
+    <div class="notice-section-title">💾 データの保存・共有の仕組み</div>
+    <div class="notice-grid">
+      <div class="notice-card">
+        <h4>🖥️ ローカル保存（自動）</h4>
+        <span lang="ja">入力した金額・メモ・チェック状態はすべて<b>このブラウザのLocalStorage</b>に自動保存されます。インターネット接続不要でオフライン動作します。<br>⚠️ ブラウザのキャッシュ削除で消えます。</span>
+        <span lang="en">All inputs are auto-saved to <b>your browser's LocalStorage</b>. Works offline. ⚠️ Cleared if browser cache is deleted.</span>
+      </div>
+      <div class="notice-card">
+        <h4>🔗 共有URL（LINEで送信）</h4>
+        <span lang="ja">「🔗 共有URL作成」ボタンを押すと、<b>現在の全設定がURLに埋め込まれます</b>。そのURLをLINEで家族に送れば、受け取った側も同じ状態を再現できます。<br>✅ 受け取った側も修正して再共有できます。</span>
+        <span lang="en">Tap "🔗 Share URL" to encode all settings into the URL. Share via LINE — recipient sees your exact state. ✅ They can edit and re-share back.</span>
+      </div>
+      <div class="notice-card">
+        <h4>📥 JSON バックアップ</h4>
+        <span lang="ja">「📥 JSON保存」で全データをファイル出力できます。「📤 JSON読込」で復元可能。端末を変えるときや引越し前に必ずバックアップしてください。</span>
+        <span lang="en">Export all data as a JSON file. Import to restore. Always backup before changing devices.</span>
+      </div>
+      <div class="notice-card">
+        <h4>✏️ 全項目が編集可能</h4>
+        <span lang="ja">費用・単価・チェックリストのオフセット日数・出発日・為替レート、<b>すべての数値と文字列はクリックして直接編集</b>できます。変更は自動保存されます。</span>
+        <span lang="en">All values (costs, dates, offsets, FX rate) are directly editable. Changes auto-save.</span>
+      </div>
+    </div>
+
+    <!-- 共有の仕組み詳細 -->
+    <div class="notice-section-title">🔄 共有相手も修正できますか？</div>
+    <div style="background:#f8f9fa;border-radius:12px;padding:14px 16px;font-size:0.84rem;line-height:1.9;margin-bottom:12px;">
+      <span lang="ja">
+        <b>はい、できます。</b>共有URLを受け取った人は：<br>
+        ① URLを開く → 送り主の設定が自動で再現される<br>
+        ② 自分でデータを修正する<br>
+        ③ 「🔗 共有URL作成」を再度押す → 新しいURLを相手に送る<br>
+        <span class="notice-badge badge-ok">✅ 双方向で修正・共有が可能</span>
+        <span class="notice-badge badge-warn">⚠️ リアルタイム同期ではありません</span><br>
+        ※ 修正のたびに再共有が必要です（バックエンドサーバー不要のため）
+      </span>
+      <span lang="en">
+        <b>Yes.</b> The recipient can: ① Open URL → state restored ② Edit data ③ Generate new URL → send back.<br>
+        <span class="notice-badge badge-ok">✅ Both-way sharing supported</span>
+        <span class="notice-badge badge-warn">⚠️ Not real-time sync</span>
+      </span>
+    </div>
+
+    <!-- 位置情報 -->
+    <div class="notice-section-title">📍 位置情報機能</div>
+    <div style="font-size:0.84rem;line-height:1.9;margin-bottom:12px;">
+      <span lang="ja">
+        <span class="notice-badge badge-ok">✅ iPhoneでも動作</span>
+        <span class="notice-badge badge-ok">✅ Android Chromeで動作</span>
+        <span class="notice-badge badge-warn">⚠️ HTTP接続では動作しない</span><br>
+        GitHub Pages（<b>https://</b>）でホスティングすれば娘さんのスマホでも位置情報取得が可能です。位置情報は<b>サーバーには送信されず</b>、このページ内とLocalStorageのみに保存されます。
+      </span>
+      <span lang="en">
+        Works on iPhone Safari + Android Chrome when hosted on HTTPS (GitHub Pages).
+        Location data is <b>never sent to any server</b> — stored only in your browser.
+      </span>
+    </div>
+
+    <!-- GitHub Pages デプロイ手順 -->
+    <div class="notice-section-title">🚀 GitHub Pages へのアップロード手順</div>
+    <div class="notice-github-steps">
+      <b>リポジトリ:</b> https://github.com/minatopew-png/nanako-plan<br>
+      <b>ステップ1:</b> このHTMLファイルをダウンロード<br>
+      <b>ステップ2:</b> ファイル名を <b>index.html</b> にリネーム<br>
+      <b>ステップ3:</b> GitHubリポジトリを開く → 「Add file」→「Upload files」<br>
+      <b>ステップ4:</b> index.html をアップロード → コミット<br>
+      <b>ステップ5:</b> Settings → Pages → Source: <b>main branch / root</b> → Save<br>
+      <b>公開URL:</b> https://minatopew-png.github.io/nanako-plan/<br>
+      <span style="color:#a5d6a7;font-size:0.78rem;">※ 外部依存: Google Fonts CDNのみ。バックエンド不要。</span>
+    </div>
+
+    <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
+      <a href="https://github.com/minatopew-png/nanako-plan" target="_blank" rel="noopener"
+        style="background:#24292e;color:white;border:none;border-radius:10px;padding:9px 16px;font-size:0.82rem;font-weight:700;text-decoration:none;">
+        🐙 GitHub リポジトリを開く →
+      </a>
+      <button onclick="closeNotice()"
+        style="background:var(--kg-blue);color:white;border:none;border-radius:10px;padding:9px 20px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;">
+        ✅ 確認しました
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ❓ 重要事項を再表示するボタン（左下固定） -->
+<button class="notice-open-btn" onclick="openNotice()" title="重要事項説明を表示">❓</button>
+
+<!-- ===== フローティングナビゲーション ===== -->
+<div id="float-nav">
+  <div id="float-nav-menu">
+    <a class="float-nav-link" href="#countdown">✈️ カウントダウン</a>
+    <a class="float-nav-link" href="#schedule">📅 スケジュール</a>
+    <a class="float-nav-link" href="#finance">💴 費用計算</a>
+    <a class="float-nav-link" href="#lifestyle">🌿 生活サイクル</a>
+    <a class="float-nav-link" href="#career">💼 キャリア</a>
+    <a class="float-nav-link" href="#scholarship">🎓 奨学金</a>
+    <a class="float-nav-link" href="#checklist">✅ 準備リスト</a>
+    <a class="float-nav-link" href="#return-plan">🏠 一時帰国</a>
+    <a class="float-nav-link" href="#emergency">🚨 緊急対応</a>
+    <a class="float-nav-link" href="#changelog">📋 変更ログ</a>
+  </div>
+  <button class="float-nav-toggle" onclick="toggleFloatNav()" title="セクション一覧">☰</button>
+</div>
+
+<!-- ▲ TOPボタン -->
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="先頭に戻る">▲</button>
+
+<div id="toast"></div>
+<div class="toolbar-share">
+  <button class="fab-btn gold" onclick="shareURL()" title="現在の設定をURLに変換してクリップボードにコピー（LINEで送信可）">🔗 共有URL作成</button>
+  <button class="fab-btn" onclick="exportJSON()" title="全データをJSONファイルとして保存">📥 JSON保存</button>
+  <button class="fab-btn" onclick="document.getElementById('importFile').click()" title="保存したJSONを読み込んで復元">📤 JSON読込</button>
+  <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)">
+</div>
 
 <!-- ===== HEADER ===== -->
 <header>
@@ -515,6 +1108,10 @@ footer {
   <a href="#lifestyle" lang="ja">🌿 生活サイクル</a><a href="#lifestyle" lang="en">🌿 Life Cycle</a>
   <a href="#career" lang="ja">💼 キャリア</a><a href="#career" lang="en">💼 Career</a>
   <a href="#scholarship" lang="ja">🎓 奨学金</a><a href="#scholarship" lang="en">🎓 Scholarship</a>
+  <a href="#checklist" lang="ja">✅ 準備リスト</a><a href="#checklist" lang="en">✅ Checklist</a>
+  <a href="#return-plan" lang="ja">🏠 一時帰国</a><a href="#return-plan" lang="en">🏠 Return Plan</a>
+  <a href="#emergency" lang="ja">🚨 緊急対応</a><a href="#emergency" lang="en">🚨 Emergency</a>
+  <a href="#changelog" lang="ja">📋 変更ログ</a><a href="#changelog" lang="en">📋 Changelog</a>
 </nav>
 
 <div class="container">
@@ -637,6 +1234,10 @@ footer {
       <div class="fx-value-display" id="fx-display">88</div>
       <span style="font-weight:700;color:#444;">円 (JPY)</span>
       <input type="range" id="fx-slider" min="60" max="140" value="88" oninput="syncFX('slider')">
+      <div style="margin-top:6px;">
+        <span id="fx-live-badge">⏳ 為替レート読み込み中...</span>
+        <button class="fx-refresh-btn" onclick="fetchLiveFX()">🔄 更新</button>
+      </div>
     </div>
     <div class="preset-btns">
       <span lang="ja" style="font-size:0.82rem;color:#666;align-self:center;">シナリオ選択：</span>
@@ -794,6 +1395,119 @@ footer {
       </div>
       <div class="bar-bg"><div class="bar-fill" id="coverage-bar" style="width:0%"></div></div>
     </div>
+  </div>
+
+
+  <!-- ===== R-13: 送金パネル（お父さん・お母さん） ===== -->
+  <div class="mama-panel">
+    <h3>
+      <span lang="ja">💝 送金シミュレーション（お父さん・お母さん別）</span>
+      <span lang="en">💝 Remittance Simulation (Father &amp; Mother)</span>
+    </h3>
+    <!-- 入学日 / 留学期間 row -->
+    <div class="mama-enroll-row">
+      <div class="mama-enroll-cell">
+        <label lang="ja">🎓 関学入学日</label>
+        <label lang="en">🎓 KGU Enrollment Date</label>
+        <input type="date" id="kgu-enroll-date" value="2026-04-01" oninput="calcMamaPanel()">
+      </div>
+      <div class="mama-enroll-cell">
+        <label lang="ja">✈️ NZ留学終了予定日</label>
+        <label lang="en">✈️ NZ Study End Date</label>
+        <span id="nz-end-date" style="font-weight:700;color:var(--kg-blue);">--</span>
+      </div>
+      <div class="mama-enroll-cell">
+        <label lang="ja">📅 仕送り期間</label>
+        <label lang="en">📅 Remittance Period</label>
+        <span id="remit-months" style="font-weight:700;">--</span>
+        <small lang="ja"> ヶ月</small><small lang="en"> months</small>
+      </div>
+    </div>
+    <div class="mama-parent-grid">
+      <!-- お父さん -->
+      <div class="mama-parent-card papa">
+        <h4 lang="ja">👔 お父さん</h4>
+        <h4 lang="en">👔 Father</h4>
+        <div class="mama-row">
+          <label lang="ja">月次仕送り</label><label lang="en">Monthly</label>
+          <input type="number" id="papa-monthly" value="90000" step="5000" min="0" oninput="calcMamaPanel()">
+          <span>円</span>
+        </div>
+        <div class="mama-row">
+          <label lang="ja">Wise手数料</label><label lang="en">Wise Fee</label>
+          <span id="papa-wise-fee">−¥360</span>
+        </div>
+        <div class="mama-row">
+          <label lang="ja">NZD受取額</label><label lang="en">Receive</label>
+          <span id="papa-nzd" style="font-weight:700;color:var(--kg-blue);">NZD --</span>
+        </div>
+        <div class="mama-row">
+          <label lang="ja">年間合計</label><label lang="en">Annual</label>
+          <span id="papa-annual">¥--</span>
+        </div>
+      </div>
+      <!-- お母さん -->
+      <div class="mama-parent-card mama">
+        <h4 lang="ja">👩 お母さん</h4>
+        <h4 lang="en">👩 Mother</h4>
+        <div class="mama-row">
+          <label lang="ja">月次仕送り</label><label lang="en">Monthly</label>
+          <input type="number" id="mama-monthly" value="90000" step="5000" min="0" oninput="calcMamaPanel()">
+          <span>円</span>
+        </div>
+        <div class="mama-row">
+          <label lang="ja">Wise手数料</label><label lang="en">Wise Fee</label>
+          <span id="mama-wise-fee">−¥360</span>
+        </div>
+        <div class="mama-row">
+          <label lang="ja">NZD受取額</label><label lang="en">Receive</label>
+          <span id="mama-nzd" style="font-weight:700;color:#e91e8c;">NZD --</span>
+        </div>
+        <div class="mama-row">
+          <label lang="ja">年間合計</label><label lang="en">Annual</label>
+          <span id="mama-annual">¥--</span>
+        </div>
+      </div>
+      </div>
+    </div><!-- /mama-parent-grid -->
+    <!-- 合計サマリー -->
+    <div class="mama-summary">
+      <div class="mama-summary-row">
+        <span lang="ja">月次合計（父＋母）</span><span lang="en">Total Monthly (F+M)</span>
+        <span id="total-monthly">¥180,000</span>
+      </div>
+      <div class="mama-summary-row">
+        <span lang="ja">年間合計（父＋母）</span><span lang="en">Total Annual (F+M)</span>
+        <span id="total-annual">¥2,160,000</span>
+      </div>
+      <div class="mama-summary-row">
+        <span lang="ja">Wise手数料節約額/年</span><span lang="en">Wise vs Bank Savings/yr</span>
+        <span id="wise-saving" style="color:#27ae60;">¥--</span>
+      </div>
+      <div class="mama-summary-row">
+        <span lang="ja">NANAKOが受け取るNZD（年間）</span><span lang="en">NANAKO receives (NZD/yr)</span>
+        <span id="total-nzd-annual" style="font-size:1.1rem;">NZD --</span>
+      </div>
+      <div class="mama-summary-row">
+        <span lang="ja">仕送り総額（全期間）</span><span lang="en">Total Remittance (full period)</span>
+        <span id="remit-total" style="font-weight:700;color:#27ae60;">¥--</span>
+      </div>
+      <div class="mama-summary-row">
+        <span lang="ja">総費用（関学＋NZ留学）</span><span lang="en">Total Cost (KGU + NZ Study)</span>
+        <span id="total-combined-cost" style="font-weight:700;color:#c0392b;">¥--</span>
+      </div>
+      <div class="mama-summary-row">
+        <span lang="ja">📊 費用カバー率（関学入学〜NZ留学修了）</span><span lang="en">📊 Coverage Rate (KGU enrollment → NZ end)</span>
+        <span id="remit-coverage" style="font-size:1.1rem;font-weight:700;">--%</span>
+      </div>
+    </div>
+    <div class="mama-coverage-bar">
+      <div class="mama-bar-bg">
+        <div class="mama-bar-fill" id="mama-bar-fill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="mama-wise-note" lang="ja">※ Wise手数料は約0.4%で試算。銀行送金は約¥3,000/回のため年間約¥72,000の節約効果があります。</div>
+    <div class="mama-wise-note" lang="en">※ Wise fee ~0.4%. Compared to bank transfer (~¥3,000/transfer), annual savings ~¥72,000.</div>
   </div>
 
   <div class="memo-area">
@@ -1091,6 +1805,743 @@ footer {
   </div>
 </section>
 
+
+<!-- ===== CHECKLIST SECTION ===== -->
+<section id="checklist">
+  <h2>
+    <span class="emoji">✅</span>
+    <span lang="ja">留学準備チェックリスト</span>
+    <span lang="en">Study-Abroad Preparation Checklist</span>
+  </h2>
+  <p style="font-size:0.88rem;color:#555;margin-bottom:16px;" lang="ja">
+    ✏️ 項目名・D-オフセット（日数）は直接編集可。出発日を変更すると全期限が自動再計算されます。
+  </p>
+  <p style="font-size:0.88rem;color:#555;margin-bottom:16px;" lang="en">
+    ✏️ Edit item names and D-offset days directly. Changing the departure date recalculates all deadlines automatically.
+  </p>
+
+  <!-- progress -->
+  <div class="cl-progress-wrap">
+    <div style="display:flex;justify-content:space-between;font-size:0.85rem;font-weight:700;color:#555;">
+      <span lang="ja">📊 完了率: <span id="cl-done-count">0</span> / <span id="cl-total-count">0</span> 項目</span>
+      <span lang="en">📊 Progress: <span id="cl-done-count2">0</span> / <span id="cl-total-count2">0</span> items</span>
+      <span id="cl-pct-label" style="color:var(--kg-blue);font-weight:900;">0%</span>
+    </div>
+    <div class="cl-progress-bar-bg">
+      <div class="cl-progress-bar-fill" id="cl-progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- categories rendered by JS -->
+  <div id="checklist-container"></div>
+
+  <div class="memo-area" style="margin-top:20px;">
+    <strong lang="ja">📝 準備メモ</strong>
+    <strong lang="en">📝 Preparation Notes</strong>
+    <textarea id="memo-checklist" placeholder="気づいたこと、追加で必要なもの、担当者への連絡など... / Notes, items to add, contacts..."></textarea>
+    <div class="save-hint">💾 自動保存 / Auto-saved</div>
+  </div>
+</section>
+
+<!-- ===== RETURN PLAN SECTION ===== -->
+<section id="return-plan">
+  <h2>
+    <span class="emoji">🏠</span>
+    <span lang="ja">一時帰国計画（NZ留学中）</span>
+    <span lang="en">Temporary Return Plan (During NZ Study)</span>
+  </h2>
+
+  <!-- 編集ヒント -->
+  <p style="font-size:0.88rem;color:#555;margin-bottom:16px;" lang="ja">
+    ✏️ 日程は参考程度です。すべての金額・項目名・日程は直接クリックして編集できます。変更は自動保存。
+  </p>
+  <p style="font-size:0.88rem;color:#555;margin-bottom:16px;" lang="en">
+    ✏️ Dates are for reference only. All amounts, items, and dates are directly editable. Changes auto-save.
+  </p>
+
+  <!-- ビザ確認パネル -->
+  <div class="return-info-banner">
+    <strong style="color:#2e7d32;font-size:0.95rem;">🛂 学生ビザ（マルチプルエントリー）― 一時帰国OKです</strong>
+    <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:0.83rem;">
+      <div lang="ja">
+        <ul style="padding-left:16px;line-height:2.0;">
+          <li>ビザの有効期限が帰国後も残っていること</li>
+          <li>在学証明書（英文）を携帯</li>
+          <li>NZ行き帰路航空券の提示</li>
+          <li>出発前に大学国際学生オフィスへ届出</li>
+          <li>十分な残存資金の証明</li>
+        </ul>
+      </div>
+      <div lang="en">
+        <ul style="padding-left:16px;line-height:2.0;">
+          <li>Visa must be valid after your return</li>
+          <li>Carry enrollment certificate (English)</li>
+          <li>Show return ticket to NZ</li>
+          <li>Notify International Student Office</li>
+          <li>Prove sufficient funds</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:10px;display:flex;gap:14px;flex-wrap:wrap;font-size:0.8rem;">
+      <a href="https://www.immigration.govt.nz/new-zealand-visas/visas/visa/student-visa" target="_blank" rel="noopener" style="color:#1565c0;font-weight:700;">🛂 Immigration NZ 学生ビザ →</a>
+      <a href="https://www.waikato.ac.nz/study/dates/" target="_blank" rel="noopener" style="color:#1565c0;font-weight:700;">📅 Waikato 学事暦 →</a>
+      <a href="https://www.waikato.ac.nz/int/students/health-wellbeing/" target="_blank" rel="noopener" style="color:#1565c0;font-weight:700;">🎓 国際学生オフィス →</a>
+    </div>
+  </div>
+
+  <!-- 試験期間注意 -->
+  <div style="background:#fff3e0;border-left:4px solid #fb8c00;border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:0.85rem;">
+    <strong>⚠️ 学事スケジュール注意 / Academic Calendar Warning：</strong>
+    <span lang="ja">Waikato大学の前期試験は6月中旬〜下旬です。帰国日が試験と重なる可能性があります。早めに担当教授にメールを送りましょう（↓テンプレートあり）。</span>
+    <span lang="en">Waikato Semester 1 exams run mid–late June. Your return trip may overlap. Email your lecturers early (template below).</span>
+  </div>
+
+  <!-- フライトルート -->
+  <h3 lang="ja" style="color:var(--kg-blue);margin-bottom:12px;">✈️ フライトルート（ハミルトン出発）</h3>
+  <h3 lang="en" style="color:var(--kg-blue);margin-bottom:12px;">✈️ Flight Route (From Hamilton)</h3>
+  <div class="route-flow">
+    <span>🏠 ハミルトン</span>
+    <span class="route-arrow">→ バス約2h →</span>
+    <span>✈️ オークランド (AKL)</span>
+    <span class="route-arrow">→ 国際線 ~10h →</span>
+    <span>🇯🇵 関西 (KIX) or 成田 (NRT)</span>
+    <span class="route-arrow">→ 電車/新幹線 →</span>
+    <span>🏡 目的地</span>
+  </div>
+  <p style="font-size:0.82rem;color:#777;margin-bottom:20px;" lang="ja">※ ハミルトン→オークランド：バス NZD 30〜50（約2時間）またはタクシー。AKLからAir NZ・JAL・ANAで直行便あり。</p>
+
+  <!-- 位置情報パネル -->
+  <div class="geo-panel">
+    <h4>📍 現在地テスト（娘スマホ用）/ Location Test</h4>
+    <p style="font-size:0.82rem;color:#555;margin-bottom:12px;" lang="ja">
+      緊急時・帰国時に現在地を確認できます。GitHub Pages（HTTPS）では娘さんのスマホでも取得可能です。
+    </p>
+    <p style="font-size:0.82rem;color:#555;margin-bottom:12px;" lang="en">
+      Check your current location in emergencies. Works on daughter's smartphone via GitHub Pages (HTTPS).
+    </p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button onclick="getLocation()" style="background:var(--kg-blue);color:white;border:none;border-radius:20px;padding:9px 20px;cursor:pointer;font-weight:700;font-size:0.85rem;font-family:'Noto Sans JP',sans-serif;">
+        📍 現在地を取得 / Get Location
+      </button>
+      <button onclick="clearGeo()" style="background:#e0e0e0;color:#555;border:none;border-radius:20px;padding:9px 18px;cursor:pointer;font-size:0.83rem;font-family:'Noto Sans JP',sans-serif;">
+        🗑️ クリア
+      </button>
+    </div>
+    <div class="geo-result" id="geo-result">
+      <div id="geo-address" style="font-weight:700;margin-bottom:6px;"></div>
+      <div id="geo-coords" style="font-size:0.8rem;color:#888;margin-bottom:10px;"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a id="geo-maps-link" href="#" target="_blank" rel="noopener" style="font-size:0.83rem;font-weight:700;color:var(--kg-blue);">🗺️ Google Mapsで開く →</a>
+        <a id="geo-hospital-link" href="#" target="_blank" rel="noopener" style="font-size:0.83rem;font-weight:700;color:#c62828;">🏥 近くの病院を検索 →</a>
+      </div>
+    </div>
+    <div id="geo-loading" style="font-size:0.84rem;color:#1565c0;margin-top:8px;display:none;">⏳ 位置情報を取得中...</div>
+    <div id="geo-error" style="font-size:0.84rem;color:#c62828;margin-top:8px;display:none;"></div>
+  </div>
+
+  <!-- 費用シミュレーション -->
+  <h3 lang="ja" style="color:var(--kg-blue);margin:20px 0 12px;">💴 費用シミュレーション（全項目編集可能）</h3>
+  <h3 lang="en" style="color:var(--kg-blue);margin:20px 0 12px;">💴 Cost Simulation (All Editable)</h3>
+  <div style="background:#e3f2fd;border-radius:10px;padding:10px 16px;margin-bottom:14px;font-size:0.85rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <span lang="ja">💱 為替レート連動：1 NZD = <strong id="rp-fx-disp">88</strong> 円（財務セクションのスライダーと同期）</span>
+    <span lang="en">💱 FX Linked: 1 NZD = <strong id="rp-fx-disp2">88</strong> JPY (synced with Finance slider)</span>
+  </div>
+  <div style="overflow-x:auto;">
+  <table class="return-cost-table" id="rp-cost-table" style="width:100%;border-collapse:collapse;font-size:0.87rem;">
+    <thead>
+      <tr style="background:var(--kg-blue);color:white;">
+        <th style="padding:10px 12px;text-align:left;border-radius:8px 0 0 0;" lang="ja">項目名</th>
+        <th style="padding:10px 8px;text-align:right;" lang="ja">単価</th>
+        <th style="padding:10px 6px;text-align:center;" lang="ja">通貨</th>
+        <th style="padding:10px 6px;text-align:center;" lang="ja">数量</th>
+        <th style="padding:10px 8px;text-align:right;" lang="ja">小計（円）</th>
+        <th style="padding:10px 8px;text-align:center;border-radius:0 8px 0 0;" lang="ja">削除</th>
+      </tr>
+    </thead>
+    <tbody id="rp-cost-body"></tbody>
+    <tfoot>
+      <tr class="return-total-row">
+        <td colspan="4" style="padding:12px 14px;" lang="ja">💰 合計（円換算）</td>
+        <td id="rp-total" style="padding:12px 8px;text-align:right;color:var(--accent-red);font-size:1.1rem;">---</td>
+        <td></td>
+      </tr>
+      <tr style="background:#f5f5f5;font-size:0.83rem;">
+        <td colspan="4" style="padding:8px 14px;" lang="ja">📅 滞在日数あたり（÷ 日数入力: <input type="number" id="rp-days-input" value="7" min="1" max="60" style="width:44px;border:1px solid #ccc;border-radius:6px;padding:2px 5px;text-align:center;font-size:0.82rem;" onchange="renderRPCosts()"> 日）</td>
+        <td id="rp-per-day" style="padding:8px;text-align:right;color:var(--kg-blue);font-weight:700;">---</td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+  <button class="add-row-btn" onclick="addRPRow()">＋ 項目追加 / Add Item</button>
+
+  <!-- 旅行スケジュール -->
+  <h3 lang="ja" style="color:var(--kg-blue);margin:24px 0 12px;">🗓️ 旅行スケジュール（参考：5泊7日）</h3>
+  <h3 lang="en" style="color:var(--kg-blue);margin:24px 0 12px;">🗓️ Sample Itinerary (Reference: 5 nights / 7 days)</h3>
+  <div style="overflow-x:auto;">
+  <table style="width:100%;border-collapse:collapse;font-size:0.86rem;">
+    <thead><tr style="background:#37474f;color:white;">
+      <th style="padding:9px 12px;border-radius:8px 0 0 0;">Day</th>
+      <th style="padding:9px 12px;" lang="ja">内容（参考）</th>
+      <th style="padding:9px 12px;" lang="en">Details (Reference)</th>
+      <th style="padding:9px 12px;border-radius:0 8px 0 0;" lang="ja">費用目安</th>
+    </tr></thead>
+    <tbody>
+      <tr style="background:#f5f5f5;"><td style="padding:9px 12px;font-weight:700;">Day 1</td>
+        <td lang="ja">ハミルトン → オークランド → 搭乗（夜行便）</td>
+        <td lang="en">Hamilton → Auckland → Board overnight flight</td>
+        <td style="padding:9px 12px;text-align:right;" lang="ja">バス NZD 30〜50</td></tr>
+      <tr><td style="padding:9px 12px;font-weight:700;">Day 2</td>
+        <td lang="ja">関西 or 成田 着 → 自宅へ・休養</td>
+        <td lang="en">Arrive KIX/NRT → Home, rest day</td>
+        <td style="padding:9px 12px;text-align:right;" lang="ja">交通費 ¥3,000〜</td></tr>
+      <tr style="background:#f5f5f5;"><td style="padding:9px 12px;font-weight:700;">Day 3</td>
+        <td lang="ja">家族との時間・買い物・用事</td>
+        <td lang="en">Family time, shopping, errands</td>
+        <td style="padding:9px 12px;text-align:right;" lang="ja">¥10,000〜30,000</td></tr>
+      <tr><td style="padding:9px 12px;font-weight:700;">Day 4</td>
+        <td lang="ja">友人のお祝いに参加（大切なイベント）</td>
+        <td lang="en">Attend friend's celebration (important event)</td>
+        <td style="padding:9px 12px;text-align:right;" lang="ja">お祝い費+交通費</td></tr>
+      <tr style="background:#f5f5f5;"><td style="padding:9px 12px;font-weight:700;">Day 5</td>
+        <td lang="ja">NZへの持帰り品購入・日本食ストック</td>
+        <td lang="en">Buy items to take back to NZ, stock Japanese food</td>
+        <td style="padding:9px 12px;text-align:right;" lang="ja">¥20,000〜50,000</td></tr>
+      <tr><td style="padding:9px 12px;font-weight:700;">Day 6</td>
+        <td lang="ja">空港へ移動 → NZへ出発</td>
+        <td lang="en">Travel to airport → Depart for NZ</td>
+        <td style="padding:9px 12px;text-align:right;" lang="ja">空港食 ¥2,000〜</td></tr>
+      <tr style="background:#f5f5f5;"><td style="padding:9px 12px;font-weight:700;">Day 7</td>
+        <td lang="ja">オークランド着 → 入国審査 → ハミルトン帰還</td>
+        <td lang="en">Arrive AKL → Customs → Back to Hamilton</td>
+        <td style="padding:9px 12px;text-align:right;" lang="ja">バス NZD 30〜50</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- スマートフォンガイド -->
+  <h3 lang="ja" style="color:var(--kg-blue);margin:24px 0 12px;">📱 スマートフォン利用ガイド（日本滞在中）</h3>
+  <h3 lang="en" style="color:var(--kg-blue);margin:24px 0 12px;">📱 Smartphone Guide (While in Japan)</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:16px;">
+    <div style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);border-radius:12px;padding:16px;border:1px solid #90caf9;">
+      <h4 style="color:#1565c0;margin:0 0 8px;font-size:0.9rem;">🌐 eSIM（最推奨）</h4>
+      <ul style="margin:0;padding-left:16px;font-size:0.82rem;line-height:1.9;" lang="ja">
+        <li>渡航前にアプリでインストール完了</li>
+        <li>Airalo：1GB/7日 USD 4〜</li>
+        <li>Nomad：3GB/30日 USD 10〜</li>
+        <li>NZのSIMと同時使用可能</li>
+      </ul>
+      <a href="https://www.airalo.com/japan-esim" target="_blank" rel="noopener" style="font-size:0.79rem;font-weight:700;color:#1565c0;display:block;margin-top:8px;">📲 Airalo Japan eSIM →</a>
+    </div>
+    <div style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border-radius:12px;padding:16px;border:1px solid #a5d6a7;">
+      <h4 style="color:#2e7d32;margin:0 0 8px;font-size:0.9rem;">📶 ポケットWi-Fi</h4>
+      <ul style="margin:0;padding-left:16px;font-size:0.82rem;line-height:1.9;" lang="ja">
+        <li>到着ロビーでレンタル可</li>
+        <li>¥600〜800/日（無制限プランあり）</li>
+        <li>家族みんなで共有できる</li>
+        <li>帰国時に空港返却</li>
+      </ul>
+    </div>
+    <div style="background:linear-gradient(135deg,#fff3e0,#ffe0b2);border-radius:12px;padding:16px;border:1px solid #ffcc80;">
+      <h4 style="color:#e65100;margin:0 0 8px;font-size:0.9rem;">⚠️ NZローミング注意</h4>
+      <ul style="margin:0;padding-left:16px;font-size:0.82rem;line-height:1.9;" lang="ja">
+        <li>NZキャリアのローミングは高額</li>
+        <li>機内モード＋Wi-Fiのみが安全</li>
+        <li>緊急時のみNZ番号使用</li>
+        <li>日本では eSIM が圧倒的お得</li>
+      </ul>
+    </div>
+    <div style="background:linear-gradient(135deg,#f3e5f5,#e1bee7);border-radius:12px;padding:16px;border:1px solid #ce93d8;">
+      <h4 style="color:#6a1b9a;margin:0 0 8px;font-size:0.9rem;">💳 キャッシュレス決済</h4>
+      <ul style="margin:0;padding-left:16px;font-size:0.82rem;line-height:1.9;" lang="ja">
+        <li>Wise カード：海外ATM最安</li>
+        <li>Suica（交通系IC）：電車・コンビニOK</li>
+        <li>Visa/Master クレカ：ほぼ全店OK</li>
+        <li>現金：¥10,000は念のため持参</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- NZ再入国チェック -->
+  <h3 lang="ja" style="color:var(--kg-blue);margin:24px 0 12px;">🛬 NZ再入国チェック（帰路）</h3>
+  <h3 lang="en" style="color:var(--kg-blue);margin:24px 0 12px;">🛬 NZ Re-entry Checklist (Return)</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:16px;">
+    <div style="background:#e3f2fd;border-radius:10px;padding:14px;font-size:0.84rem;">
+      <h4 style="color:#1565c0;margin:0 0 8px;font-size:0.88rem;">📄 必携書類</h4>
+      <ul style="margin:0;padding-left:16px;line-height:1.9;" lang="ja">
+        <li>パスポート（残存6ヶ月以上）</li>
+        <li>学生ビザ（有効期限確認）</li>
+        <li>在学証明書（英文）</li>
+        <li>NZ行き帰路航空券</li>
+        <li>寮/住居の住所証明</li>
+        <li>残高証明書（英文）</li>
+      </ul>
+    </div>
+    <div style="background:#fff3e0;border-radius:10px;padding:14px;font-size:0.84rem;">
+      <h4 style="color:#e65100;margin:0 0 8px;font-size:0.88rem;">🧳 NZ持込注意</h4>
+      <ul style="margin:0;padding-left:16px;line-height:1.9;" lang="ja">
+        <li>❌ 生鮮肉・乳製品</li>
+        <li>❌ 土のついた植物・種</li>
+        <li>✅ レトルト・乾物はほぼOK</li>
+        <li>✅ 薬は英文処方箋持参</li>
+      </ul>
+      <a href="https://www.mpi.govt.nz/travelling-to-nz/what-you-can-and-cant-bring-in/" target="_blank" rel="noopener" style="font-size:0.78rem;color:#1565c0;font-weight:700;display:block;margin-top:8px;">🔗 MPI 持込可否 →</a>
+    </div>
+    <div style="background:#e8f5e9;border-radius:10px;padding:14px;font-size:0.84rem;">
+      <h4 style="color:#2e7d32;margin:0 0 8px;font-size:0.88rem;">💊 薬の持込</h4>
+      <ul style="margin:0;padding-left:16px;line-height:1.9;" lang="ja">
+        <li>市販薬は3ヶ月分まで可</li>
+        <li>処方薬は英文レター必須</li>
+        <li>元のパッケージで持参</li>
+        <li>税関申告用紙に記載</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 教授メールテンプレート -->
+  <h3 lang="ja" style="color:var(--kg-blue);margin:24px 0 10px;">📧 担当教授へのメールテンプレート（英文）</h3>
+  <h3 lang="en" style="color:var(--kg-blue);margin:24px 0 10px;">📧 Email Template to Lecturer</h3>
+  <div style="background:#263238;color:#a5d6a7;border-radius:12px;padding:20px;font-family:'Courier New',monospace;font-size:0.8rem;line-height:1.9;position:relative;">
+    <button onclick="copyEmailTpl()" style="position:absolute;top:10px;right:10px;padding:5px 14px;background:#43a047;color:white;border:none;border-radius:8px;cursor:pointer;font-size:0.75rem;font-family:'Noto Sans JP',sans-serif;">📋 コピー</button>
+    <div id="email-tpl">Subject: Temporary Leave Request – [Your Name] – [Course Code]
+
+Dear Professor [Last Name],
+
+I hope this email finds you well.
+My name is [Your Name], an international exchange student from
+Kwansei Gakuin University, enrolled in your [Course Name].
+
+I am writing to respectfully request a brief leave of absence
+from [Start Date] to [End Date] to attend an important
+personal event in Japan.
+
+I am fully committed to my academic responsibilities and will:
+  • Complete all assignments before my departure
+  • Obtain notes from fellow classmates
+  • Attend any available make-up sessions
+  • Ensure this absence does not affect my performance
+
+I would greatly appreciate your understanding and any guidance
+on managing this absence appropriately.
+
+Thank you very much for your consideration.
+
+Kind regards,
+[Your Name] | Student ID: [ID]
+Exchange Student, Kwansei Gakuin University, Japan</div>
+  </div>
+
+  <!-- メモ -->
+  <div class="memo-area" style="margin-top:24px;">
+    <strong lang="ja">🏠 一時帰国メモ（費用実績・変更点など）</strong>
+    <strong lang="en">🏠 Return Trip Notes (actual costs, changes, etc.)</strong>
+    <textarea id="memo-return" placeholder="帰国の目的・費用の実績・準備で気づいたこと... / Purpose of return, actual costs, notes..."></textarea>
+    <div class="save-hint">💾 自動保存 / Auto-saved</div>
+  </div>
+</section>
+
+<!-- ===== SECTION 9: EMERGENCY ===== -->
+<section id="emergency">
+  <h2>
+    <span class="emoji">🚨</span>
+    <span lang="ja">緊急時対応マニュアル</span>
+    <span lang="en">Emergency Response Manual</span>
+  </h2>
+
+  <!-- 緊急ホットライン -->
+  <div class="emg-intro">
+    <p lang="ja"><strong>⚡ まず111番に電話（NZ警察・救急・消防共通）。英語が難しい場合は「Japanese interpreter please」と伝える。</strong></p>
+    <p lang="en"><strong>⚡ Call 111 first (Police / Ambulance / Fire – NZ). If English is difficult, say "Japanese interpreter please".</strong></p>
+    <div class="emg-hotline">
+      <a class="emg-hotline-btn" href="tel:111">📞 111 緊急</a>
+      <a class="emg-hotline-btn secondary" href="tel:+6478398899">🏥 Waikato病院</a>
+      <a class="emg-hotline-btn green" href="tel:+6478384466 ">🎓 大学国際学生</a>
+      <a class="emg-hotline-btn amber" href="tel:+6444731540">🇯🇵 在NZ日本大使館</a>
+      <a class="emg-hotline-btn" href="tel:0800842846" style="background:#9b59b6;">💜 Victim Support</a>
+    </div>
+  </div>
+
+  <!-- 緊急連絡先（編集可能） -->
+  <h3 lang="ja">📞 緊急連絡先リスト（編集可能）</h3>
+  <h3 lang="en">📞 Emergency Contact List (Editable)</h3>
+  <div class="emg-contact-grid">
+    <div class="emg-contact-card urgent">
+      <h4 lang="ja">👔 お父さん（日本）</h4><h4 lang="en">👔 Father (Japan)</h4>
+      <input class="emg-contact-input" type="tel" id="emg-papa-tel" placeholder="電話番号を入力" onchange="saveEmgContacts();logChange('emg-papa-tel','お父さん電話番号','Father Phone',this.value)">
+      <button class="emg-copy-btn" onclick="copyField('emg-papa-tel')">📋 コピー</button>
+    </div>
+    <div class="emg-contact-card urgent">
+      <h4 lang="ja">👩 お母さん（日本）</h4><h4 lang="en">👩 Mother (Japan)</h4>
+      <input class="emg-contact-input" type="tel" id="emg-mama-tel" placeholder="電話番号を入力" onchange="saveEmgContacts();logChange('emg-mama-tel','お母さん電話番号','Mother Phone',this.value)">
+      <button class="emg-copy-btn" onclick="copyField('emg-mama-tel')">📋 コピー</button>
+    </div>
+    <div class="emg-contact-card">
+      <h4 lang="ja">🏥 Waikato病院</h4><h4 lang="en">🏥 Waikato Hospital</h4>
+      <input class="emg-contact-input" type="tel" id="emg-hospital" value="+64-7-839-8899" readonly>
+      <button class="emg-copy-btn" onclick="copyField('emg-hospital')">📋 コピー</button>
+    </div>
+    <div class="emg-contact-card">
+      <h4 lang="ja">🎓 Waikato大学国際学生課</h4><h4 lang="en">🎓 Waikato Uni International</h4>
+      <input class="emg-contact-input" type="tel" id="emg-univ" value="+64-7-838-4466" readonly>
+      <button class="emg-copy-btn" onclick="copyField('emg-univ')">📋 コピー</button>
+    </div>
+    <div class="emg-contact-card">
+      <h4 lang="ja">🇯🇵 在NZ日本大使館</h4><h4 lang="en">🇯🇵 Japanese Embassy NZ</h4>
+      <input class="emg-contact-input" type="tel" id="emg-embassy" value="+64-4-473-1540" readonly>
+      <button class="emg-copy-btn" onclick="copyField('emg-embassy')">📋 コピー</button>
+    </div>
+    <div class="emg-contact-card">
+      <h4 lang="ja">💜 Victim Support</h4><h4 lang="en">💜 Victim Support NZ</h4>
+      <input class="emg-contact-input" type="tel" id="emg-victim" value="0800-842-846" readonly>
+      <button class="emg-copy-btn" onclick="copyField('emg-victim')">📋 コピー</button>
+    </div>
+    <div class="emg-contact-card">
+      <h4 lang="ja">🌐 Lifeline NZ（メンタルヘルス）</h4><h4 lang="en">🌐 Lifeline NZ</h4>
+      <input class="emg-contact-input" type="tel" id="emg-lifeline" value="0800-543-354" readonly>
+      <button class="emg-copy-btn" onclick="copyField('emg-lifeline')">📋 コピー</button>
+    </div>
+    <div class="emg-contact-card">
+      <h4 lang="ja">🌏 NZ警察（非緊急）</h4><h4 lang="en">🌏 NZ Police (non-emergency)</h4>
+      <input class="emg-contact-input" type="tel" id="emg-police" value="105" readonly>
+      <button class="emg-copy-btn" onclick="copyField('emg-police')">📋 コピー</button>
+    </div>
+  </div>
+
+  <!-- 11カテゴリ アコーディオン -->
+  <h3 lang="ja" style="margin-top:28px;">📚 状況別対応フロー（11カテゴリ）</h3>
+  <h3 lang="en" style="margin-top:28px;">📚 Response Flow by Situation (11 Categories)</h3>
+  <div class="emg-accordion" id="emg-accordion">
+
+    <!-- 1. 病気・怪我 -->
+    <div class="emg-acc-item" data-cat="1">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>🤒 <span lang="ja">病気・怪我</span><span lang="en">Illness / Injury</span></span>
+        <div><span class="badge">最重要</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">重症の場合は <strong>111</strong> に電話（救急車手配）</li>
+          <li lang="en">For serious cases: call <strong>111</strong> (ambulance)</li>
+          <li lang="ja">軽症の場合は最寄りのGP（家庭医）またはUrgent Care Clinic へ</li>
+          <li lang="en">For mild cases: visit nearest GP or Urgent Care Clinic</li>
+          <li lang="ja">海外旅行保険（証券番号を財布に携帯）に電話して指示を受ける</li>
+          <li lang="en">Call your travel insurance hotline (carry policy number in wallet)</li>
+          <li lang="ja">お父さん・お母さんに状況を連絡</li>
+          <li lang="en">Notify family immediately</li>
+          <li lang="ja">大学国際学生課 (+64-7-838-4466) に連絡し出席への影響を相談</li>
+          <li lang="en">Contact Waikato Uni International (+64-7-838-4466) for attendance impact</li>
+        </ol>
+        <p lang="ja" style="background:#fff3cd;padding:8px 12px;border-radius:8px;margin-top:8px;">⚠️ Waikato病院 ED: <strong>Pembroke St, Hamilton Central</strong>（GPS: -37.7870, 175.2793）<br>📞 <strong>+64-7-839-8899</strong></p>
+        <p lang="en" style="background:#fff3cd;padding:8px 12px;border-radius:8px;margin-top:8px;">⚠️ Waikato Hospital ED: <strong>Pembroke St, Hamilton Central</strong> (GPS: -37.7870, 175.2793)<br>📞 <strong>+64-7-839-8899</strong></p>
+      </div>
+    </div>
+
+    <!-- 2. 自然災害 -->
+    <div class="emg-acc-item" data-cat="2">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>🌊 <span lang="ja">自然災害（地震・洪水・津波）</span><span lang="en">Natural Disaster (Earthquake/Flood/Tsunami)</span></span>
+        <div><span class="badge">最重要</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">地震: まず机の下に隠れる（Drop / Cover / Hold On）、揺れが収まったら屋外へ避難</li>
+          <li lang="en">Earthquake: Drop, Cover, Hold On. After shaking: evacuate to open area</li>
+          <li lang="ja">津波: 海岸から高台へ徒歩で退避。車は使わない（渋滞で逃げられない）</li>
+          <li lang="en">Tsunami: Walk to high ground. Do NOT use car.</li>
+          <li lang="ja">Civil Defence緊急情報: <a href="https://www.civildefence.govt.nz" target="_blank">civildefence.govt.nz</a></li>
+          <li lang="en">Civil Defence: <a href="https://www.civildefence.govt.nz" target="_blank">civildefence.govt.nz</a></li>
+          <li lang="ja">GeoNet地震情報: <a href="https://www.geonet.org.nz" target="_blank">geonet.org.nz</a></li>
+          <li lang="en">Earthquakes: <a href="https://www.geonet.org.nz" target="_blank">geonet.org.nz</a></li>
+          <li lang="ja">安全確保後、家族に現在地をLINEで送る（このページの📍位置情報ボタンを活用）</li>
+          <li lang="en">Once safe, send your location to family via LINE (use 📍 in this page)</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 3. 盗難・紛失 -->
+    <div class="emg-acc-item" data-cat="3">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>🔑 <span lang="ja">盗難・紛失（パスポート・財布・スマホ）</span><span lang="en">Theft / Loss (Passport / Wallet / Phone)</span></span>
+        <div><span class="badge amber">重要</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">NZ警察に被害届（105番または最寄り警察署）→ 事件番号を必ずもらう</li>
+          <li lang="en">Report to NZ Police (105 or local station) → Get crime report number</li>
+          <li lang="ja">パスポート紛失: 在NZ日本大使館 (+64-4-473-1540)に連絡し緊急旅券申請</li>
+          <li lang="en">Lost passport: Contact Japanese Embassy (+64-4-473-1540) for emergency passport</li>
+          <li lang="ja">財布・カード紛失: 各カード会社の緊急停止番号に即電話（Wiseはアプリでロック）</li>
+          <li lang="en">Lost card: Call card company immediately; Wise card can be locked via app</li>
+          <li lang="ja">スマホ紛失: iPhoneは「探す」、Androidは「デバイスを探す」でリモートロック</li>
+          <li lang="en">Lost phone: iPhone "Find My" / Android "Find My Device" – remote lock</li>
+          <li lang="ja">海外旅行保険に連絡（盗難補償の申請）</li>
+          <li lang="en">Contact travel insurance for theft compensation claim</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 4. メンタルヘルス -->
+    <div class="emg-acc-item" data-cat="4">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>💜 <span lang="ja">メンタルヘルス・孤独感・ホームシック</span><span lang="en">Mental Health / Homesickness / Loneliness</span></span>
+        <div><span class="badge blue">サポート</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">まずお父さん・お母さんにLINEビデオ通話をする（時差は-4時間）</li>
+          <li lang="en">First: FaceTime/LINE video call with family (time diff. -4h from Japan)</li>
+          <li lang="ja">Lifeline NZ（24時間）: 0800-543-354（英語のみ）</li>
+          <li lang="en">Lifeline NZ (24h): 0800-543-354</li>
+          <li lang="ja">大学カウンセリングサービス（無料）: 学生ポータルから予約</li>
+          <li lang="en">Waikato Uni counselling (free): Book via student portal</li>
+          <li lang="ja">需要な状態と感じた場合は周囲に伝える・111番または警察に連絡</li>
+          <li lang="en">In crisis: tell someone nearby, or call 111</li>
+        </ol>
+        <p lang="ja" style="background:#f3e5f5;padding:8px 12px;border-radius:8px;margin-top:8px;">💜 <strong>ホームシックは当然のこと。一人で抱え込まないで。</strong><br>Waikato大学には日本人学生コミュニティがあります。</p>
+        <p lang="en" style="background:#f3e5f5;padding:8px 12px;border-radius:8px;margin-top:8px;">💜 <strong>Homesickness is completely normal. You are not alone.</strong></p>
+      </div>
+    </div>
+
+    <!-- 5. 交通事故 -->
+    <div class="emg-acc-item" data-cat="5">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>🚗 <span lang="ja">交通事故・転倒・骨折</span><span lang="en">Traffic Accident / Fall / Fracture</span></span>
+        <div><span class="badge">最重要</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">怪我がある場合は111番（救急）、軽傷はUrgent Careへ</li>
+          <li lang="en">Injuries: call 111; minor injuries: Urgent Care clinic</li>
+          <li lang="ja">NZのACC（事故補償公社）が治療費をカバー（外国人も対象）</li>
+          <li lang="en">NZ ACC covers medical costs for accidents (including foreigners)</li>
+          <li lang="ja">事故現場: 相手の氏名・連絡先・車両ナンバーを記録、写真を撮影</li>
+          <li lang="en">At scene: record other party's name, contact, plate number, take photos</li>
+          <li lang="ja">警察への届け出: 物損のみの場合は105番でOK</li>
+          <li lang="en">Police report: non-injury accidents – call 105</li>
+        </ol>
+        <p lang="ja" style="background:#e8f4fd;padding:8px 12px;border-radius:8px;margin-top:8px;">ℹ️ NZは左側通行。横断歩道でも車は徐行しないことがあるため注意。</p>
+        <p lang="en" style="background:#e8f4fd;padding:8px 12px;border-radius:8px;margin-top:8px;">ℹ️ NZ drives on the LEFT. Pedestrians should still exercise caution at crossings.</p>
+      </div>
+    </div>
+
+    <!-- 6. 住居トラブル -->
+    <div class="emg-acc-item" data-cat="6">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>🏠 <span lang="ja">住居トラブル（退去・水漏れ・鍵紛失）</span><span lang="en">Housing Issues (Eviction / Water Leak / Locked Out)</span></span>
+        <div><span class="badge amber">重要</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">突然の退去通知: 大学国際学生課に相談。Tenancy Servicesに連絡（0800-836-262）</li>
+          <li lang="en">Sudden eviction: Contact Uni International Office. Call Tenancy Services: 0800-836-262</li>
+          <li lang="ja">水漏れ・ガス漏れ: 大家に即連絡。ガス漏れは窓を開けて建物を出て消防119（→111）</li>
+          <li lang="en">Water/gas leak: notify landlord. Gas leak: open windows, evacuate, call 111</li>
+          <li lang="ja">鍵紛失: 大家または寮管理者に連絡。深夜は最寄りの24時間錠前業者を利用</li>
+          <li lang="en">Locked out: Contact landlord/dorm manager; after hours use 24h locksmith</li>
+          <li lang="ja">緊急宿泊が必要な場合: 大学の緊急学生支援（Student Support）に連絡</li>
+          <li lang="en">Need emergency accommodation: Contact Waikato Uni Student Support</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 7. ビザ・在留資格 -->
+    <div class="emg-acc-item" data-cat="7">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>🛂 <span lang="ja">ビザ・在留資格トラブル</span><span lang="en">Visa / Immigration Issues</span></span>
+        <div><span class="badge amber">重要</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">ビザ期限切れに気づいた場合: <strong>即日</strong> Immigration NZ に連絡（0508-558-855）</li>
+          <li lang="en">Visa expired: Contact Immigration NZ <strong>immediately</strong> (0508-558-855)</li>
+          <li lang="ja">ビザ更新中は期限切れでも合法的に滞在可能（bridging visa相当）</li>
+          <li lang="en">While renewal is in process, you may remain legally (bridging status)</li>
+          <li lang="ja">大学国際学生課でビザ延長の書類サポートを受ける</li>
+          <li lang="en">Get document support from Waikato Uni International Office</li>
+          <li lang="ja">参考: <a href="https://www.immigration.govt.nz" target="_blank">immigration.govt.nz</a></li>
+          <li lang="en">Reference: <a href="https://www.immigration.govt.nz" target="_blank">immigration.govt.nz</a></li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 8. 財務緊急（現金不足・アカウント停止） -->
+    <div class="emg-acc-item" data-cat="8">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>💸 <span lang="ja">財務緊急（現金不足・カード停止・緊急送金）</span><span lang="en">Financial Emergency (No Cash / Card Blocked / Emergency Transfer)</span></span>
+        <div><span class="badge amber">重要</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">Wiseアプリで日本のお父さん・お母さんから即時送金を依頼（受取まで数時間）</li>
+          <li lang="en">Ask family to send via Wise app (received in a few hours)</li>
+          <li lang="ja">銀行送金（SWIFT）は2〜5営業日かかるため緊急時は不向き</li>
+          <li lang="en">Bank SWIFT transfer takes 2-5 business days – not suitable for emergencies</li>
+          <li lang="ja">Western Union は即日対応可能だが手数料が高い（最終手段）</li>
+          <li lang="en">Western Union: same-day but high fees (last resort)</li>
+          <li lang="ja">大学の緊急Student Loan制度がある場合あり（Student Services に確認）</li>
+          <li lang="en">Waikato Uni may have emergency student loan (check Student Services)</li>
+        </ol>
+        <p lang="ja" style="background:#e8f4fd;padding:8px 12px;border-radius:8px;margin-top:8px;">💡 Wise NZD口座を事前に開設しておくと、送金が数分〜数時間で着金します。</p>
+        <p lang="en" style="background:#e8f4fd;padding:8px 12px;border-radius:8px;margin-top:8px;">💡 Open a Wise NZD account in advance so transfers arrive in minutes to hours.</p>
+      </div>
+    </div>
+
+    <!-- 9. 犯罪被害 -->
+    <div class="emg-acc-item" data-cat="9">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>⚠️ <span lang="ja">犯罪被害（強盗・暴行・ハラスメント）</span><span lang="en">Crime (Robbery / Assault / Harassment)</span></span>
+        <div><span class="badge">最重要</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">身の安全を確保してから111番（警察）に通報</li>
+          <li lang="en">Ensure your safety first, then call 111</li>
+          <li lang="ja">Victim Support（0800-842-846）は24時間対応の無料サポートサービス</li>
+          <li lang="en">Victim Support (0800-842-846): free 24h support service</li>
+          <li lang="ja">証拠保全: 怪我の写真、メッセージ、場所のメモを残す</li>
+          <li lang="en">Preserve evidence: photos of injuries, messages, location notes</li>
+          <li lang="ja">在NZ日本大使館 (+64-4-473-1540) に報告し、必要に応じて支援を求める</li>
+          <li lang="en">Report to Japanese Embassy (+64-4-473-1540) for consular support</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 10. 連絡が取れない -->
+    <div class="emg-acc-item" data-cat="10">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>📵 <span lang="ja">家族と連絡が取れない（スマホ故障・SIM切れ）</span><span lang="en">Out of Contact (Phone Broken / SIM Expired)</span></span>
+        <div><span class="badge blue">確認</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">大学図書館またはカフェのWi-Fiで LINE Web / Skype を利用</li>
+          <li lang="en">Use campus library or café Wi-Fi to contact via LINE Web or Skype</li>
+          <li lang="ja">コンビニまたはSupermarketでSIMカードを購入（Spark / One NZ / 2degrees）</li>
+          <li lang="en">Buy a new SIM at supermarket or convenience store (Spark / One NZ / 2degrees)</li>
+          <li lang="ja">大学国際学生課のPCを借りてメール送信</li>
+          <li lang="en">Borrow a computer at Uni International Office to send email</li>
+          <li lang="ja">お父さん・お母さんに緊急時の連絡先として <strong>大学国際学生課の番号を事前に伝えておく</strong></li>
+          <li lang="en">Give family the Uni International number as backup contact in advance</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 11. 緊急帰国 -->
+    <div class="emg-acc-item" data-cat="11">
+      <div class="emg-acc-header" onclick="toggleAcc(this)">
+        <span>✈️ <span lang="ja">緊急帰国（家族の危篤・自然災害による避難）</span><span lang="en">Emergency Return (Family Critical / Disaster Evacuation)</span></span>
+        <div><span class="badge">最重要</span> <span class="emg-acc-chevron">▼</span></div>
+      </div>
+      <div class="emg-acc-body">
+        <ol>
+          <li lang="ja">航空会社に「緊急帰国」を申し出ると変更手数料が免除される場合がある</li>
+          <li lang="en">Contact airline immediately – emergency bereavement fares may apply</li>
+          <li lang="ja">大学国際学生課に緊急帰国の旨を連絡し、学業への影響を相談</li>
+          <li lang="en">Notify Uni International Office – discuss academic impact</li>
+          <li lang="ja">Travel Insurance に連絡（緊急帰国費用の補償申請）</li>
+          <li lang="en">Contact travel insurance for emergency repatriation claim</li>
+          <li lang="ja">帰国後の再入国ビザ確認（有効期限・在籍証明書の再発行）</li>
+          <li lang="en">Check visa validity on return + get new enrollment certificate</li>
+          <li lang="ja">帰国前に荷物の一時保管先を手配（大学寮・信頼できる友人宅）</li>
+          <li lang="en">Arrange temporary storage for belongings before departure</li>
+        </ol>
+        <p lang="ja" style="background:#fff3cd;padding:8px 12px;border-radius:8px;margin-top:8px;">⚠️ 再入国前にビザ延長が必要な場合は大使館に相談。Hamilton→Auckland バス（NZD 30-50）または Air NZ フライトで Auckland 空港へ。</p>
+        <p lang="en" style="background:#fff3cd;padding:8px 12px;border-radius:8px;margin-top:8px;">⚠️ Check if visa extension is needed before re-entry. Hamilton→Auckland: Bus NZD 30-50 or Air NZ to AKL airport.</p>
+      </div>
+    </div>
+
+  </div><!-- end accordion -->
+
+  <!-- 緊急送金シミュレーター -->
+  <div class="emg-remit">
+    <h3 lang="ja">💸 緊急送金シミュレーター（お母さんが直感的に使える）</h3>
+    <h3 lang="en">💸 Emergency Remittance Simulator (Intuitive for Parents)</h3>
+    <div class="remit-calc">
+      <div class="remit-input-group">
+        <label lang="ja">送金金額（円）</label><label lang="en">Amount to Send (JPY)</label>
+        <input type="number" id="remit-jpy" value="50000" step="10000" min="1000" oninput="calcRemit()">
+      </div>
+      <div class="remit-input-group">
+        <label lang="ja">緊急度</label><label lang="en">Urgency</label>
+        <select id="remit-urgency" onchange="calcRemit()">
+          <option value="normal" lang="ja">通常（数時間）/ Normal (hours)</option>
+          <option value="urgent" lang="ja">急ぎ（今日中）/ Urgent (today)</option>
+          <option value="critical" lang="ja">即時（30分以内）/ Critical (30 min)</option>
+        </select>
+      </div>
+    </div>
+    <div class="remit-result">
+      <p id="remit-result-text" lang="ja" style="font-size:1.05rem;font-weight:700;color:var(--kg-blue);">
+        計算中...
+      </p>
+      <p id="remit-result-text-en" lang="en" style="font-size:1.05rem;font-weight:700;color:var(--kg-blue);">
+        Calculating...
+      </p>
+    </div>
+    <div class="remit-method-grid">
+      <div class="remit-method-card best">
+        <div class="method-name">🌿 Wise（推奨）</div>
+        <div lang="ja">手数料: 約0.4%<br>着金: 数時間〜翌日<br>最安値の送金方法</div>
+        <div lang="en">Fee: ~0.4%<br>Arrival: hours–next day<br>Cheapest option</div>
+        <a class="remit-deeplink" href="https://wise.com/jp/send-money/" target="_blank" lang="ja">📲 Wiseを開く</a>
+        <a class="remit-deeplink" href="https://wise.com/jp/send-money/" target="_blank" lang="en">📲 Open Wise</a>
+      </div>
+      <div class="remit-method-card alt">
+        <div class="method-name">🏦 銀行送金（SWIFT）</div>
+        <div lang="ja">手数料: 約¥3,000〜<br>着金: 2〜5営業日<br>緊急時は不向き</div>
+        <div lang="en">Fee: ~¥3,000+<br>Arrival: 2-5 business days<br>Not for emergencies</div>
+      </div>
+      <div class="remit-method-card last">
+        <div class="method-name">⚡ Western Union（最終手段）</div>
+        <div lang="ja">手数料: 高め（3〜5%）<br>着金: 30分以内も可<br>本当の緊急時のみ</div>
+        <div lang="en">Fee: high (3-5%)<br>Arrival: can be under 30 min<br>For true emergencies only</div>
+        <a class="remit-deeplink" href="https://www.westernunion.com/jp/ja/home.html" target="_blank" style="background:#e74c3c;" lang="ja">⚡ WUを開く</a>
+        <a class="remit-deeplink" href="https://www.westernunion.com/jp/ja/home.html" target="_blank" style="background:#e74c3c;" lang="en">⚡ Open WU</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 緊急時メモ -->
+  <div class="emg-memo-area memo-area" style="margin-top:24px;">
+    <strong lang="ja">📝 緊急時対応メモ（保険証券番号・かかりつけ薬など）</strong>
+    <strong lang="en">📝 Emergency Notes (Insurance policy no. / medications, etc.)</strong>
+    <textarea id="memo-emergency" placeholder="海外旅行保険の証券番号・緊急連絡先・服用中の薬 / Insurance policy no., emergency contacts, medications..."></textarea>
+    <div class="save-hint">💾 自動保存 / Auto-saved</div>
+  </div>
+</section>
+
+<!-- ===== SECTION 10: CHANGELOG ===== -->
+<section id="changelog">
+  <h2>
+    <span class="emoji">📋</span>
+    <span lang="ja">変更ログ・更新履歴</span>
+    <span lang="en">Change Log / Update History</span>
+  </h2>
+  <p lang="ja" style="color:#666;font-size:0.9rem;">このページで変更された項目を記録します。家族間で「誰が・いつ・何を変えたか」を確認できます。</p>
+  <p lang="en" style="color:#666;font-size:0.9rem;">Changes made to this page are recorded here. Family members can see what was changed and when.</p>
+
+  <div class="cl-toolbar">
+    <div class="cl-filter-btns">
+      <button class="cl-filter-btn active" data-filter="all" onclick="filterLog(this,'all')" lang="ja">すべて</button>
+      <button class="cl-filter-btn active" data-filter="all" onclick="filterLog(this,'all')" lang="en">All</button>
+      <button class="cl-filter-btn" data-filter="A" onclick="filterLog(this,'A')">🔴 計画</button>
+      <button class="cl-filter-btn" data-filter="B" onclick="filterLog(this,'B')">💴 財務</button>
+      <button class="cl-filter-btn" data-filter="C" onclick="filterLog(this,'C')">✅ チェック</button>
+      <button class="cl-filter-btn" data-filter="D" onclick="filterLog(this,'D')">📞 緊急</button>
+      <button class="cl-filter-btn" data-filter="E" onclick="filterLog(this,'E')">📝 メモ</button>
+    </div>
+    <span class="cl-count" id="cl-log-count">0件</span>
+    <button class="cl-action-btn csv" onclick="exportLogCSV()" lang="ja">📥 CSV出力</button>
+    <button class="cl-action-btn csv" onclick="exportLogCSV()" lang="en">📥 Export CSV</button>
+    <button class="cl-action-btn clear" onclick="clearLog()" lang="ja">🗑️ クリア</button>
+    <button class="cl-action-btn clear" onclick="clearLog()" lang="en">🗑️ Clear</button>
+  </div>
+
+  <div class="cl-timeline" id="cl-timeline">
+    <div class="cl-empty" lang="ja">まだ変更履歴はありません。<br>出発日・為替レート・仕送り額などを変更すると、ここに記録されます。</div>
+    <div class="cl-empty" lang="en">No changes recorded yet.<br>Change departure date, FX rate, remittance amounts, etc. to see logs here.</div>
+  </div>
+</section>
 </div><!-- end .container -->
 
 <footer>
@@ -1124,9 +2575,17 @@ function loadDeparture() {
 function updateDeparture() {
   const val = document.getElementById('departure-date-input').value;
   if (val) {
+    const prev = localStorage.getItem('nanako_departure') || DEFAULT_DEPARTURE;
     departureDate = new Date(val + 'T00:00:00');
     localStorage.setItem('nanako_departure', val);
     updateDepartureDisplay();
+    updateCountdown();
+    try { renderChecklist(); } catch(e) {}
+    try { renderRPCosts(); } catch(e) {}
+    try { calcMamaPanel(); } catch(e) {}
+    if (prev !== val) {
+      showToast('\u2705 \u51fa\u767a\u65e5\u3092 ' + val + ' \u306b\u5909\u66f4\u3002\u5168\u671f\u9650\u3092\u66f4\u65b0\u3057\u307e\u3057\u305f', 3000);
+    }
   }
 }
 
@@ -1299,7 +2758,7 @@ function updateBucketProgress() {
 // ==========================================
 // 7. MEMO / LOCALSTORAGE PERSISTENCE
 // ==========================================
-const MEMO_IDS = ['memo-schedule','memo-finance','memo-life','memo-career','memo-scholarship'];
+const MEMO_IDS = ['memo-schedule','memo-finance','memo-life','memo-career','memo-scholarship','memo-checklist','memo-return','memo-emergency'];
 
 function saveMemos() {
   MEMO_IDS.forEach(id => {
@@ -1325,6 +2784,10 @@ window.addEventListener('DOMContentLoaded', () => {
   calcFinance();
   renderBucketList();
   loadMemos();
+  loadChecklist();
+  loadRPCosts();
+  restoreGeo();
+  loadFromHash();  // URL hash sharing
   // Set default active preset button
   document.querySelectorAll('.preset-btn').forEach(btn => {
     if (btn.textContent.includes('¥88')) btn.classList.add('active');
@@ -1335,6 +2798,997 @@ MEMO_IDS.forEach(id => {
   const el = document.getElementById(id);
   if (el) el.addEventListener('input', saveMemos);
 });
+
+// ==========================================
+// A. TOAST HELPER
+// ==========================================
+function showToast(msg, duration=2800) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ==========================================
+// B. URL HASH SHARING
+// ==========================================
+function buildShareState() {
+  const state = {
+    dep: localStorage.getItem('nanako_departure') || '2027-09-01',
+    fx: currentFX,
+    lang: document.body.classList.contains('mode-en') ? 'en' : 'ja',
+    bucket: localStorage.getItem('nanako_bucket') || '[]',
+    cl: JSON.stringify(checklistData),
+    rpc: JSON.stringify(rpCosts),
+    rpd: document.getElementById('rp-days-input') ? document.getElementById('rp-days-input').value : '7',
+    memos: {}
+  };
+  const MEMO_IDS2 = ['memo-schedule','memo-finance','memo-life','memo-career','memo-scholarship','memo-checklist','memo-return','memo-emergency'];
+  MEMO_IDS2.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) state.memos[id] = el.value;
+  });
+  // 緊急連絡先（編集可能フィールド）
+  state.emgPapa = (document.getElementById('emg-papa-tel')||{}).value||'';
+  state.emgMama = (document.getElementById('emg-mama-tel')||{}).value||'';
+  // 親送金額
+  state.papaMon = (document.getElementById('papa-monthly')||{}).value||'90000';
+  state.mamaMon = (document.getElementById('mama-monthly')||{}).value||'90000';
+  // 変更ログ（Q3: URLハッシュに含める）
+  state.changelog = localStorage.getItem('nanako_changelog')||'[]';
+  return state;
+}
+
+function shareURL() {
+  try {
+    const state = buildShareState();
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+    const url = location.origin + location.pathname + '#s=' + encoded;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        showToast('✅ 共有URLをコピーしました！LINEで送信してください');
+      }).catch(() => fallbackCopy(url));
+    } else { fallbackCopy(url); }
+  } catch(e) { showToast('❌ URL生成エラー: ' + e.message); }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed'; ta.style.top = '-9999px';
+  document.body.appendChild(ta); ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  showToast('✅ 共有URLをコピーしました！LINEで送信してください');
+}
+
+function exportJSON() {
+  const state = buildShareState();
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const d = new Date();
+  a.download = 'nanako_settings_' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0') + '.json';
+  a.click();
+  showToast('📥 JSONファイルを保存しました');
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      applyState(JSON.parse(e.target.result));
+      showToast('✅ 設定を読み込みました！');
+    } catch(err) { showToast('❌ 読込エラー: ' + err.message); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function loadFromHash() {
+  const hash = location.hash;
+  if (!hash.startsWith('#s=')) return;
+  try {
+    const json = decodeURIComponent(escape(atob(hash.slice(3))));
+    applyState(JSON.parse(json));
+    showToast('🔗 共有URLから設定を読み込みました', 3500);
+  } catch(e) { /* silent */ }
+}
+
+function applyState(state) {
+  if (state.dep) {
+    departureDate = new Date(state.dep + 'T00:00:00');
+    const el = document.getElementById('departure-date-input');
+    if (el) el.value = state.dep;
+    localStorage.setItem('nanako_departure', state.dep);
+    updateDepartureDisplay();
+    renderChecklist();
+    renderRPCosts();
+  }
+  if (state.fx) { currentFX = parseInt(state.fx); syncFX('preset'); }
+  if (state.lang === 'en' && !document.body.classList.contains('mode-en')) toggleLang();
+  if (state.lang === 'ja' && document.body.classList.contains('mode-en')) toggleLang();
+  if (state.bucket) { localStorage.setItem('nanako_bucket', state.bucket); renderBucketList(); }
+  if (state.cl) { try { checklistData = JSON.parse(state.cl); localStorage.setItem('nanako_cl', state.cl); renderChecklist(); } catch(e){} }
+  if (state.rpc) { try { rpCosts = JSON.parse(state.rpc); localStorage.setItem('nanako_rpc', state.rpc); renderRPCosts(); } catch(e){} }
+  if (state.rpd) { const el = document.getElementById('rp-days-input'); if (el) el.value = state.rpd; }
+  if (state.memos) {
+    Object.entries(state.memos).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) { el.value = val; localStorage.setItem('nanako_' + id, val); }
+    });
+  }
+  if (state.emgPapa !== undefined) { const el=document.getElementById('emg-papa-tel'); if(el){el.value=state.emgPapa; localStorage.setItem('nanako_emg_papa',state.emgPapa);} }
+  if (state.emgMama !== undefined) { const el=document.getElementById('emg-mama-tel'); if(el){el.value=state.emgMama; localStorage.setItem('nanako_emg_mama',state.emgMama);} }
+  if (state.papaMon) { const el=document.getElementById('papa-monthly'); if(el){el.value=state.papaMon; localStorage.setItem('nanako_papa_mon',state.papaMon);} }
+  if (state.mamaMon) { const el=document.getElementById('mama-monthly'); if(el){el.value=state.mamaMon; localStorage.setItem('nanako_mama_mon',state.mamaMon);} }
+  if (state.changelog) { localStorage.setItem('nanako_changelog',state.changelog); renderChangeLog(); }
+  calcMamaPanel();
+}
+
+// ==========================================
+// C. GEOLOCATION
+// ==========================================
+function getLocation() {
+  const loading = document.getElementById('geo-loading');
+  const errorEl = document.getElementById('geo-error');
+  const resultEl = document.getElementById('geo-result');
+  loading.style.display = 'block';
+  errorEl.style.display = 'none';
+  resultEl.classList.remove('show');
+
+  if (!navigator.geolocation) {
+    loading.style.display = 'none';
+    errorEl.textContent = '❌ このブラウザは位置情報に対応していません / Geolocation not supported';
+    errorEl.style.display = 'block';
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      loading.style.display = 'none';
+      const lat = pos.coords.latitude.toFixed(6);
+      const lng = pos.coords.longitude.toFixed(6);
+      document.getElementById('geo-coords').textContent = '📍 緯度 ' + lat + ' / 経度 ' + lng + ' (精度: ±' + Math.round(pos.coords.accuracy) + 'm)';
+      document.getElementById('geo-maps-link').href = 'https://www.google.com/maps?q=' + lat + ',' + lng;
+      document.getElementById('geo-hospital-link').href = 'https://www.google.com/maps/search/hospital/@' + lat + ',' + lng + ',14z';
+      // reverse geocode via Nominatim (free, no key)
+      fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&accept-language=ja')
+        .then(r => r.json())
+        .then(data => {
+          const addr = data.display_name || lat + ', ' + lng;
+          document.getElementById('geo-address').textContent = '🗺️ ' + addr;
+          localStorage.setItem('nanako_last_location', JSON.stringify({lat, lng, addr, time: new Date().toISOString()}));
+        })
+        .catch(() => { document.getElementById('geo-address').textContent = '📍 緯度 ' + lat + ' / 経度 ' + lng; });
+      resultEl.classList.add('show');
+    },
+    err => {
+      loading.style.display = 'none';
+      const msgs = {1: '位置情報の許可が必要です。ブラウザの設定から許可してください。', 2: '位置情報を取得できませんでした。', 3: 'タイムアウトしました。再度お試しください。'};
+      errorEl.textContent = '❌ ' + (msgs[err.code] || err.message);
+      errorEl.style.display = 'block';
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+  );
+}
+
+function clearGeo() {
+  document.getElementById('geo-result').classList.remove('show');
+  document.getElementById('geo-error').style.display = 'none';
+  document.getElementById('geo-loading').style.display = 'none';
+}
+
+// load last location if saved
+function restoreGeo() {
+  const saved = localStorage.getItem('nanako_last_location');
+  if (!saved) return;
+  try {
+    const {lat, lng, addr} = JSON.parse(saved);
+    document.getElementById('geo-address').textContent = '🗺️ (前回) ' + addr;
+    document.getElementById('geo-coords').textContent = '📍 緯度 ' + lat + ' / 経度 ' + lng;
+    document.getElementById('geo-maps-link').href = 'https://www.google.com/maps?q=' + lat + ',' + lng;
+    document.getElementById('geo-hospital-link').href = 'https://www.google.com/maps/search/hospital/@' + lat + ',' + lng + ',14z';
+    document.getElementById('geo-result').classList.add('show');
+  } catch(e){}
+}
+
+// ==========================================
+// D. CHECKLIST (D-offset, departure-linked)
+// ==========================================
+const DEFAULT_CHECKLIST = [
+  { cat: '📄 書類・パスポート', catEn: '📄 Documents & Passport', items: [
+    { text: 'パスポート取得・更新（残存10年）', textEn: 'Obtain/renew passport (10yr)', offset: 548, done: false },
+    { text: '戸籍謄本を取得する', textEn: 'Obtain family register (koseki)', offset: 180, done: false },
+    { text: '在学証明書（英文）を取得', textEn: 'Get enrollment certificate (EN)', offset: 90, done: false },
+    { text: '健康診断書（英文）を取得', textEn: 'Get medical certificate (EN)', offset: 90, done: false },
+    { text: 'ビザ申請書類を準備', textEn: 'Prepare student visa documents', offset: 180, done: false },
+  ]},
+  { cat: '📚 単位・履修計画', catEn: '📚 Credits & Academic Plan', items: [
+    { text: '取得単位数・必修科目を確認', textEn: 'Check required credits & courses', offset: 700, done: false },
+    { text: '交換留学プログラム説明会に参加', textEn: 'Attend exchange program info session', offset: 456, done: false },
+    { text: '単位互換の手続きを完了', textEn: 'Complete credit transfer procedure', offset: 365, done: false },
+    { text: 'Waikato大学の履修登録を完了', textEn: 'Complete Waikato course enrollment', offset: 90, done: false },
+    { text: '関学CIECと最終確認', textEn: 'Final check with KGU CIEC', offset: 60, done: false },
+  ]},
+  { cat: '✈️ 渡航費用準備', catEn: '✈️ Travel Costs', items: [
+    { text: '航空券を予約する（早割）', textEn: 'Book flights (early bird)', offset: 180, done: false },
+    { text: '海外旅行保険に加入（1000万円以上）', textEn: 'Get travel insurance (10M JPY+)', offset: 90, done: false },
+    { text: '外貨両替・Wiseカード準備', textEn: 'Get foreign currency / Wise card', offset: 30, done: false },
+    { text: '緊急用現金（NZD現金）を準備', textEn: 'Prepare emergency cash (NZD)', offset: 14, done: false },
+    { text: 'クレジットカード海外利用設定を確認', textEn: 'Enable overseas card use', offset: 30, done: false },
+  ]},
+  { cat: '🗣️ 英語スキル', catEn: '🗣️ English Skills', items: [
+    { text: 'IELTS 初回受験', textEn: 'Take IELTS (1st attempt)', offset: 456, done: false },
+    { text: 'IELTS 目標スコア 6.5 達成', textEn: 'Achieve IELTS 6.5', offset: 270, done: false },
+    { text: '英会話スクール・アプリで練習継続', textEn: 'Continue English practice', offset: 365, done: false },
+    { text: 'NZ現地の英語表現・スラングを学ぶ', textEn: 'Learn NZ English & slang', offset: 90, done: false },
+    { text: 'アカデミック英語ライティング練習', textEn: 'Practice academic English writing', offset: 180, done: false },
+  ]},
+  { cat: '🎓 奨学金・助成金', catEn: '🎓 Scholarships & Grants', items: [
+    { text: 'JASSO海外留学奨学金に申請', textEn: 'Apply for JASSO scholarship', offset: 456, done: false },
+    { text: '関学の留学助成金に申請', textEn: 'Apply for KGU study grant', offset: 365, done: false },
+    { text: 'Waikato大学奨学金を確認・申請', textEn: 'Check & apply Waikato scholarships', offset: 270, done: false },
+    { text: '給付奨学金の継続手続き（在学中）', textEn: 'Continue scholarship procedures', offset: 180, done: false },
+  ]},
+  { cat: '📋 申請・手続き', catEn: '📋 Applications & Procedures', items: [
+    { text: 'NZ学生ビザ申請', textEn: 'Apply for NZ student visa', offset: 180, done: false },
+    { text: '関学交換留学申請を完了', textEn: 'Complete KGU exchange application', offset: 365, done: false },
+    { text: '寮・住居の申込み', textEn: 'Apply for dormitory / housing', offset: 270, done: false },
+    { text: '国民健康保険の海外転出手続き', textEn: 'Procedures for health insurance abroad', offset: 90, done: false },
+    { text: '銀行口座の海外利用設定', textEn: 'Set up bank account for overseas use', offset: 60, done: false },
+    { text: '緊急連絡先リストを作成', textEn: 'Create emergency contact list', offset: 30, done: false },
+  ]},
+  { cat: '🧳 持参リスト', catEn: '🧳 Packing List', items: [
+    { text: 'パスポート・ビザ書類（原本＋コピー）', textEn: 'Passport & visa docs (original+copy)', offset: 3, done: false },
+    { text: '航空券・保険証書（プリントアウト）', textEn: 'Tickets & insurance (printed)', offset: 3, done: false },
+    { text: 'NZD現金・クレジットカード・Wiseカード', textEn: 'NZD cash, credit cards, Wise card', offset: 3, done: false },
+    { text: 'スマートフォン・充電器・変換プラグ（NZ：Type I）', textEn: 'Phone, charger, adapter (NZ: Type I)', offset: 7, done: false },
+    { text: '常備薬・英文処方箋', textEn: 'Medicines with English prescriptions', offset: 7, done: false },
+    { text: '日本食・調味料（レトルト）', textEn: 'Japanese food & condiments (retort)', offset: 5, done: false },
+    { text: '衣類（NZ気候：重ね着対応）', textEn: 'Clothes (NZ climate: layering)', offset: 7, done: false },
+    { text: '文房具・ノートパソコン・ACアダプター', textEn: 'Stationery, laptop, AC adapter', offset: 5, done: false },
+    { text: '日英辞書・テキスト類', textEn: 'Japanese-English dictionary & textbooks', offset: 5, done: false },
+    { text: '緊急連絡先カード（財布に入れておく）', textEn: 'Emergency contact card (in wallet)', offset: 1, done: false },
+  ]},
+  { cat: '🚗 国際免許・NZ運転', catEn: '🚗 International Licence & NZ Driving', items: [
+
+    // ── STEP 1: 日本での手続き（出発前）──
+    { text: '【STEP1】普通自動車免許を取得・確認（AT限定でも国際免許発行可）', textEn: '[STEP1] Hold valid JP driver licence (AT-only OK for IDP)', offset: 180, done: false },
+    { text: '【STEP1】国際運転免許証（IDP）申請 — 最寄りの警察署または運転免許センターへ持参申請', textEn: '[STEP1] Apply for IDP at local police station or licence centre', offset: 90, done: false },
+    { text: '【STEP1】IDP申請持参物：①日本の運転免許証 ②パスポート ③証明写真（2.4×3.0cm）×2枚 ④手数料 ¥2,350', textEn: '[STEP1] IDP docs: JP licence, passport, 2 photos (2.4×3.0cm), fee ¥2,350', offset: 90, done: false },
+    { text: '【STEP1】IDP有効期限は発行日から1年間（NZでは12ヶ月以内のIDP+日本の免許証の両携帯が必要）', textEn: '[STEP1] IDP valid 1 year from issue; must carry IDP + JP licence in NZ', offset: 90, done: false },
+    { text: '【STEP1】IDP取得完了・有効期限を確認してメモする', textEn: '[STEP1] Obtain IDP & note expiry date', offset: 60, done: false },
+
+    // ── STEP 2: NZの法律・ルール確認（出発前〜到着後）──
+    { text: '【STEP2】NZは左側通行を確認（日本と同じ）。右ハンドル車が多い', textEn: '[STEP2] NZ drives on LEFT (same as Japan). Most cars are RHD', offset: 30, done: false },
+    { text: '【STEP2】NZ道路交通法の基本ルールを確認（NZTA公式サイト：nzta.govt.nz）', textEn: '[STEP2] Review NZ road rules at nzta.govt.nz', offset: 30, done: false },
+    { text: '【STEP2】NZ特有ルール：信号なし交差点は右優先（Give Way）。ラウンドアバウト（環状交差点）の走行ルールを練習', textEn: '[STEP2] NZ Give Way rule: yield to right; practice roundabout rules', offset: 30, done: false },
+    { text: '【STEP2】NZ制限速度：市街地50km/h、郊外100km/h（高速道路なし）。住宅街 30km/h ゾーンあり', textEn: '[STEP2] Speed limits: urban 50km/h, open road 100km/h; school zones 40km/h', offset: 30, done: false },
+    { text: '【STEP2】飲酒運転：20歳未満は血中アルコール0（ゼロトレランス）。20歳以上でも0.05%以下', textEn: '[STEP2] DUI: under 20 = zero tolerance (0%). Over 20 max 0.05%', offset: 30, done: false },
+    { text: '【STEP2】スマホ操作は運転中完全禁止（ハンズフリーも原則不可）', textEn: '[STEP2] Phone use while driving is completely illegal (incl. hands-free)', offset: 30, done: false },
+    { text: '【STEP2】シートベルト全席着用義務（違反時は1人あたり罰金 NZD 150）', textEn: '[STEP2] Seatbelts compulsory for all passengers (NZD 150 fine/person)', offset: 14, done: false },
+
+    // ── STEP 3: 到着後の手続き（NZ現地）──
+    { text: '【STEP3】IDP有効期限（1年）が切れた後はNZ現地免許（NZTA）に切替が必要。切替申請先：AA（NZ自動車協会）', textEn: '[STEP3] After IDP expires (1yr), convert to NZ licence at AA office', offset: 0, done: false },
+    { text: '【STEP3】NZ免許切替の持参物：IDP＋日本の免許証、パスポート、住所証明書、申請料 NZD 51.10', textEn: '[STEP3] NZ licence conversion: IDP+JP licence, passport, address proof, NZD 51.10', offset: 0, done: false },
+    { text: '【STEP3】NZ免許切替はAA（NZ Automobile Association）のオフィスで手続き。ハミルトン支部住所：cnr Anglesea & Ward St', textEn: '[STEP3] NZ AA Hamilton: cnr Anglesea & Ward St (walk-in or appointment)', offset: 0, done: false },
+    { text: '【STEP3】NZ免許申請URL：https://www.aa.co.nz/drivers-licence（要事前確認）', textEn: '[STEP3] NZ licence application: aa.co.nz/drivers-licence', offset: 0, done: false },
+
+    // ── STEP 4: 車の借り方・保険 ──
+    { text: '【STEP4】レンタカー利用時：IDP＋日本免許証を両方提示。年齢制限（25歳未満は割増料金の場合あり）を確認', textEn: '[STEP4] Car rental: present both IDP & JP licence. Under-25 surcharge may apply', offset: 0, done: false },
+    { text: '【STEP4】レンタカー保険：CDW（衝突損害免責）に加入を強く推奨。NZは任意保険文化が薄く対物無制限ではない場合あり', textEn: '[STEP4] Always take CDW insurance for rentals. Third-party cover varies in NZ', offset: 0, done: false },
+    { text: '【STEP4】NZのACCは事故の対人医療費をカバーするが、車両損害は自己負担。レンタカーの補償範囲を必ず確認', textEn: '[STEP4] ACC covers personal injury, NOT vehicle damage – check your cover', offset: 0, done: false },
+    { text: '【STEP4】カーシェア（Mevo/Flexicar）やライドシェア（Uber/Ola）も選択肢として確認', textEn: '[STEP4] Car-share options: Mevo, Flexicar; rideshare: Uber, Ola (Hamilton)', offset: 0, done: false },
+
+    // ── STEP 5: ハミルトン周辺の交通情報 ──
+    { text: '【STEP5】ハミルトン市内バス（Busit Hamilton）：RouteFinder Appをダウンロード。学生割引あり', textEn: '[STEP5] Hamilton city bus: Busit Hamilton app. Student discounts available', offset: 14, done: false },
+    { text: '【STEP5】ワイカト大学 ⇔ Hamilton中心部：徒歩約15分またはバスで約10分', textEn: '[STEP5] Waikato Uni ↔ Hamilton CBD: 15min walk or ~10min bus', offset: 14, done: false },
+    { text: '【STEP5】ハミルトン⇔オークランド：バス InterCity/Manabus（NZD 15〜30）または Air NZ フライト（NZD 50〜）', textEn: '[STEP5] Hamilton ↔ Auckland: InterCity/Manabus NZD 15-30 or Air NZ NZD 50+', offset: 0, done: false },
+    { text: '【STEP5】自転車通学も選択肢：ワイカト大学構内に駐輪場・シャワーあり。ヘルメット着用義務（NZ法律）', textEn: '[STEP5] Cycling: bike racks & showers on campus. Helmet COMPULSORY by law', offset: 14, done: false },
+
+    // ── STEP 6: 安全・緊急対応 ──
+    { text: '【STEP6】事故時の対応：①安全な場所に車を移動 ②怪我人がいれば111番 ③相手の氏名・免許番号・車両ナンバー・保険を記録', textEn: '[STEP6] Accident: move to safety, call 111 if injury, exchange details (name/licence/plate/insurance)', offset: 0, done: false },
+    { text: '【STEP6】NZはACC（事故補償公社）があり、交通事故の医療費は外国人を含め原則カバー', textEn: '[STEP6] NZ ACC covers accident medical costs for everyone, incl. foreigners', offset: 0, done: false },
+    { text: '【STEP6】ロードサービス：AA会員（年会費 NZD 99〜）に加入すると24時間出張対応。緊急番号 0800-500-222', textEn: '[STEP6] AA Roadside Assist: membership NZD 99+/yr. 24h callout: 0800-500-222', offset: 0, done: false },
+  ]},
+];
+
+let checklistData = [];
+
+function loadChecklist() {
+  const saved = localStorage.getItem('nanako_cl');
+  if (saved) {
+    try { checklistData = JSON.parse(saved); } catch(e) { checklistData = JSON.parse(JSON.stringify(DEFAULT_CHECKLIST)); }
+  } else {
+    checklistData = JSON.parse(JSON.stringify(DEFAULT_CHECKLIST));
+  }
+  renderChecklist();
+}
+
+function saveChecklist() {
+  localStorage.setItem('nanako_cl', JSON.stringify(checklistData));
+}
+
+function calcDeadline(offset) {
+  const dep = departureDate || new Date('2027-09-01T00:00:00');
+  return new Date(dep.getTime() - offset * 86400000);
+}
+
+function renderChecklist() {
+  const container = document.getElementById('checklist-container');
+  if (!container) return;
+  container.innerHTML = '';
+  let totalDone = 0, totalAll = 0;
+
+  checklistData.forEach((cat, ci) => {
+    const catDone = cat.items.filter(i => i.done).length;
+    totalDone += catDone;
+    totalAll += cat.items.length;
+
+    const catDiv = document.createElement('div');
+    catDiv.className = 'checklist-category';
+
+    const header = document.createElement('div');
+    header.className = 'checklist-cat-header';
+    const bodyId = 'cl-body-' + ci;
+    header.innerHTML = `
+      <div class="cat-title">
+        <span>${cat.cat}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="cat-progress-badge">${catDone}/${cat.items.length}</span>
+        <span style="font-size:1rem;" id="cl-arrow-${ci}">▼</span>
+      </div>`;
+    header.onclick = () => {
+      const body = document.getElementById(bodyId);
+      const arrow = document.getElementById('cl-arrow-' + ci);
+      const isOpen = body.style.display !== 'none';
+      body.style.display = isOpen ? 'none' : 'block';
+      arrow.textContent = isOpen ? '▶' : '▼';
+    };
+    catDiv.appendChild(header);
+
+    const body = document.createElement('div');
+    body.className = 'checklist-cat-body';
+    body.id = bodyId;
+
+    cat.items.forEach((item, ii) => {
+      const deadline = calcDeadline(item.offset);
+      const now = new Date();
+      const diff = Math.ceil((deadline - now) / 86400000);
+      let badgeClass = 'green', badgeText = '残' + diff + '日';
+      if (item.done) { badgeClass = 'grey'; badgeText = '✓ 完了'; }
+      else if (diff <= 0) { badgeClass = 'red'; badgeText = '期限超過'; }
+      else if (diff <= 30) { badgeClass = 'red'; badgeText = '残' + diff + '日'; }
+      else if (diff <= 90) { badgeClass = 'yellow'; badgeText = '残' + diff + '日'; }
+      const deadlineStr = deadline.toLocaleDateString('ja-JP', {year:'numeric', month:'2-digit', day:'2-digit'});
+
+      const row = document.createElement('div');
+      row.className = 'checklist-item-row' + (item.done ? ' done' : '');
+      row.innerHTML = `
+        <input type="checkbox" class="cl-checkbox" ${item.done ? 'checked' : ''}
+          onchange="checklistData[${ci}].items[${ii}].done=this.checked;saveChecklist();renderChecklist();">
+        <input type="text" class="cl-text" value="${escHtml(item.text)}"
+          onchange="checklistData[${ci}].items[${ii}].text=this.value;saveChecklist();"
+          style="${item.done ? 'text-decoration:line-through;color:#aaa;' : ''}">
+        <span class="cl-offset-label">D −</span>
+        <input type="number" class="cl-offset" value="${item.offset}" min="0" max="1825"
+          onchange="checklistData[${ci}].items[${ii}].offset=parseInt(this.value)||0;saveChecklist();renderChecklist();">
+        <span class="cl-offset-label">日前</span>
+        <span class="cl-deadline">📅 ${deadlineStr}</span>
+        <span class="cl-badge ${badgeClass}">${badgeText}</span>
+        <button class="cl-del-btn" onclick="removeClItem(${ci},${ii})">✕</button>`;
+      body.appendChild(row);
+    });
+
+    // add-item button
+    const addBtn = document.createElement('button');
+    addBtn.className = 'cl-add-btn';
+    addBtn.textContent = '＋ 項目を追加';
+    addBtn.onclick = () => { addClItem(ci); };
+    body.appendChild(addBtn);
+
+    catDiv.appendChild(body);
+    container.appendChild(catDiv);
+  });
+
+  // progress
+  const pct = totalAll ? Math.round(totalDone / totalAll * 100) : 0;
+  ['cl-done-count','cl-done-count2'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = totalDone; });
+  ['cl-total-count','cl-total-count2'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = totalAll; });
+  const pctEl = document.getElementById('cl-pct-label'); if(pctEl) pctEl.textContent = pct + '%';
+  const fill = document.getElementById('cl-progress-fill'); if(fill) fill.style.width = pct + '%';
+}
+
+function addClItem(ci) {
+  checklistData[ci].items.push({ text: '新規タスク', textEn: 'New task', offset: 30, done: false });
+  saveChecklist();
+  renderChecklist();
+}
+
+function removeClItem(ci, ii) {
+  checklistData[ci].items.splice(ii, 1);
+  saveChecklist();
+  renderChecklist();
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ==========================================
+// E. RETURN PLAN COSTS
+// ==========================================
+const DEFAULT_RP_COSTS = [
+  { name: 'ハミルトン→オークランド バス（往復）', unit: 80,   cur: 'NZD', qty: 2 },
+  { name: '国際線航空券 AKL⇔日本（往復）',         unit: 1600, cur: 'NZD', qty: 1 },
+  { name: '宿泊費（ホテル等）',                     unit: 15000, cur: 'JPY', qty: 3 },
+  { name: '国内交通費（電車・バス等）',             unit: 15000, cur: 'JPY', qty: 1 },
+  { name: 'お祝い関連費用',                         unit: 30000, cur: 'JPY', qty: 1 },
+  { name: '衣装・身支度',                           unit: 20000, cur: 'JPY', qty: 1 },
+  { name: '食費・雑費',                             unit: 5000,  cur: 'JPY', qty: 5 },
+  { name: 'eSIM（日本用 Airalo等）',                unit: 12,    cur: 'USD', qty: 1 },
+  { name: 'NZ持帰り品・日本食',                    unit: 20000, cur: 'JPY', qty: 1 },
+  { name: '緊急予備費',                             unit: 20000, cur: 'JPY', qty: 1 },
+];
+
+let rpCosts = [];
+
+function loadRPCosts() {
+  const saved = localStorage.getItem('nanako_rpc');
+  if (saved) { try { rpCosts = JSON.parse(saved); } catch(e) { rpCosts = JSON.parse(JSON.stringify(DEFAULT_RP_COSTS)); } }
+  else { rpCosts = JSON.parse(JSON.stringify(DEFAULT_RP_COSTS)); }
+  renderRPCosts();
+}
+
+function saveRPCosts() {
+  localStorage.setItem('nanako_rpc', JSON.stringify(rpCosts));
+}
+
+function toJPY(unit, cur) {
+  if (cur === 'NZD') return unit * currentFX;
+  if (cur === 'USD') return unit * 150;
+  return unit;
+}
+
+function renderRPCosts() {
+  // sync FX display
+  ['rp-fx-disp','rp-fx-disp2'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = currentFX; });
+
+  const tbody = document.getElementById('rp-cost-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  let total = 0;
+
+  rpCosts.forEach((row, i) => {
+    const sub = toJPY(row.unit, row.cur) * row.qty;
+    total += sub;
+    const tr = document.createElement('tr');
+    tr.style.background = i % 2 === 0 ? '#f8f9fa' : 'white';
+    tr.innerHTML = `
+      <td style="padding:8px 10px;">
+        <input type="text" class="finance-input wide" value="${escHtml(row.name)}"
+          onchange="rpCosts[${i}].name=this.value;saveRPCosts();">
+      </td>
+      <td style="padding:8px 8px;text-align:right;">
+        <input type="number" class="finance-input num" value="${row.unit}" min="0"
+          onchange="rpCosts[${i}].unit=parseFloat(this.value)||0;renderRPCosts();saveRPCosts();">
+      </td>
+      <td style="padding:8px 6px;text-align:center;">
+        <select class="finance-input" onchange="rpCosts[${i}].cur=this.value;renderRPCosts();saveRPCosts();"
+          style="width:70px;">
+          <option value="JPY"${row.cur==='JPY'?' selected':''}>¥ JPY</option>
+          <option value="NZD"${row.cur==='NZD'?' selected':''}>NZD</option>
+          <option value="USD"${row.cur==='USD'?' selected':''}>USD</option>
+        </select>
+      </td>
+      <td style="padding:8px 6px;text-align:center;">
+        <input type="number" class="finance-input" value="${row.qty}" min="1"
+          style="width:54px;text-align:center;"
+          onchange="rpCosts[${i}].qty=parseInt(this.value)||1;renderRPCosts();saveRPCosts();">
+      </td>
+      <td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--kg-blue);">
+        ¥${Math.round(sub).toLocaleString()}
+      </td>
+      <td style="padding:8px 8px;text-align:center;">
+        <button class="del-row-btn" onclick="removeRPRow(${i})">✕</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+
+  const totalEl = document.getElementById('rp-total');
+  if (totalEl) totalEl.textContent = '¥' + Math.round(total).toLocaleString();
+  const daysEl = document.getElementById('rp-days-input');
+  const days = daysEl ? (parseInt(daysEl.value) || 7) : 7;
+  const perDay = document.getElementById('rp-per-day');
+  if (perDay) perDay.textContent = '¥' + Math.round(total / days).toLocaleString() + '/日';
+}
+
+function addRPRow() {
+  rpCosts.push({ name: '新規項目', unit: 0, cur: 'JPY', qty: 1 });
+  renderRPCosts();
+  saveRPCosts();
+}
+
+function removeRPRow(i) {
+  rpCosts.splice(i, 1);
+  renderRPCosts();
+  saveRPCosts();
+}
+
+// patch syncFX to re-render return plan costs
+(function() {
+  const origSyncFX = window.syncFX;
+  window.syncFX = function(src) {
+    origSyncFX(src);
+    renderRPCosts();
+  };
+});
+
+// ==========================================
+// F. EMAIL TEMPLATE COPY
+// ==========================================
+function copyEmailTpl() {
+  const text = document.getElementById('email-tpl').innerText;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('📋 メールテンプレートをコピーしました'));
+  } else {
+    const ta = document.createElement('textarea'); ta.value = text;
+    ta.style.position = 'fixed'; ta.style.top = '-9999px';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); showToast('📋 コピーしました');
+  }
+}
+
+// ==========================================
+// G. DEPARTURE DATE CHANGE → merged into updateDeparture()
+// ==========================================
+
+
+// ==========================================
+// H. 重要事項モーダル
+// ==========================================
+function openNotice() {
+  document.getElementById('notice-modal-overlay').classList.add('open');
+}
+function closeNotice() {
+  document.getElementById('notice-modal-overlay').classList.remove('open');
+  localStorage.setItem('nanako_notice_seen', '1');
+}
+
+// ==========================================
+// I. 為替レート自動取得（Frankfurter API）
+// ==========================================
+async function fetchLiveFX() {
+  const badge = document.getElementById('fx-live-badge');
+  if (badge) badge.textContent = '⏳ 最新レート取得中...';
+  try {
+    const res = await fetch('https://api.frankfurter.app/latest?from=NZD&to=JPY');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const rate = Math.round(data.rates.JPY);
+    currentFX = rate;
+    document.getElementById('fx-slider').value = rate;
+    syncFX('preset');
+    const ts = new Date().toLocaleTimeString('ja-JP', {hour:'2-digit',minute:'2-digit'});
+    if (badge) badge.textContent = '🔄 自動取得済: 1 NZD = ¥' + rate + ' (' + ts + ' 更新)';
+    showToast('💱 為替レートを自動更新しました: 1 NZD = ¥' + rate);
+  } catch(e) {
+    if (badge) badge.textContent = '⚠️ 自動取得失敗 — デフォルト値(88)を使用 | ' + e.message;
+    showToast('⚠️ 為替レートの自動取得に失敗しました（手動で調整してください）', 4000);
+  }
+}
+
+// ==========================================
+// J. フローティングナビ
+// ==========================================
+let floatNavOpen = false;
+function toggleFloatNav() {
+  floatNavOpen = !floatNavOpen;
+  const menu = document.getElementById('float-nav-menu');
+  if (floatNavOpen) menu.classList.add('open'); else menu.classList.remove('open');
+}
+
+// ページ外クリックでフロートナビを閉じる
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('float-nav');
+  if (nav && !nav.contains(e.target) && floatNavOpen) {
+    floatNavOpen = false;
+    document.getElementById('float-nav-menu').classList.remove('open');
+  }
+});
+
+// ==========================================
+// K. ▲TOPボタン & アクティブセクション強調
+// ==========================================
+const SECTION_IDS = ['countdown','schedule','finance','lifestyle','career','scholarship','checklist','return-plan','emergency','changelog'];
+
+window.addEventListener('scroll', function() {
+  // ▲ TOPボタン
+  const btn = document.getElementById('back-to-top');
+  if (btn) {
+    if (window.scrollY > 320) btn.classList.add('show'); else btn.classList.remove('show');
+  }
+
+  // アクティブセクション判定
+  let current = '';
+  SECTION_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= 220) current = id;
+  });
+
+  document.querySelectorAll('.float-nav-link').forEach(a => {
+    const href = a.getAttribute('href').replace('#','');
+    if (href === current) a.classList.add('active-section');
+    else a.classList.remove('active-section');
+  });
+  document.querySelectorAll('nav a').forEach(a => {
+    const href = a.getAttribute('href').replace('#','');
+    if (href === current) a.style.color = 'var(--kg-gold)';
+    else a.style.color = '';
+  });
+}, {passive: true});
+
+// ==========================================
+// L. URL自動更新（変更時）& 共有状態表示
+// ==========================================
+function updateHashSilently() {
+  try {
+    const state = buildShareState();
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+    history.replaceState(null, '', '#s=' + encoded);
+  } catch(e) { /* silent */ }
+}
+
+// 定期的にURL hashを更新（30秒ごと）
+setInterval(updateHashSilently, 30000);
+
+// ==========================================
+// M. 初回起動時 モーダル表示 & FX自動取得
+// ==========================================
+window.addEventListener('DOMContentLoaded', function initExtra() {
+  // 初回訪問時はモーダルを表示（#s= 共有URLでなく、かつ初回）
+  const seen = localStorage.getItem('nanako_notice_seen');
+  const isShareURL = location.hash.startsWith('#s=');
+  if (!seen && !isShareURL) {
+    setTimeout(openNotice, 600);
+  }
+  // 為替レート自動取得（ページ読み込み時）
+  fetchLiveFX();
+  // R-12 緊急連絡先 復元
+  loadEmgContacts();
+  // R-13 母財務パネル 復元
+  loadMamaPanel();
+  // R-14 変更ログ 復元
+  loadChangeLog();
+  // 変更ログ監視バインド
+  bindChangeLogListeners();
+  // 緊急送金シミュレーター初期計算
+  calcRemit();
+});
+
+// ==========================================
+// R-12: 緊急セクション
+// ==========================================
+function toggleAcc(header) {
+  const item = header.parentElement;
+  const body = item.querySelector('.emg-acc-body');
+  const isOpen = item.classList.contains('open');
+  // 全部閉じる
+  document.querySelectorAll('.emg-acc-item').forEach(el => {
+    el.classList.remove('open');
+    el.querySelector('.emg-acc-body').classList.remove('open');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    body.classList.add('open');
+  }
+}
+
+function copyField(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const val = el.value || el.textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(val).then(() => showToast('📋 コピーしました: ' + val));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = val; ta.style.position='fixed'; ta.style.top='-9999px';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); showToast('📋 コピーしました: ' + val);
+  }
+}
+
+function saveEmgContacts() {
+  const papa = document.getElementById('emg-papa-tel');
+  const mama = document.getElementById('emg-mama-tel');
+  if (papa) localStorage.setItem('nanako_emg_papa', papa.value);
+  if (mama) localStorage.setItem('nanako_emg_mama', mama.value);
+}
+
+function loadEmgContacts() {
+  const papa = document.getElementById('emg-papa-tel');
+  const mama = document.getElementById('emg-mama-tel');
+  if (papa) papa.value = localStorage.getItem('nanako_emg_papa') || '';
+  if (mama) mama.value = localStorage.getItem('nanako_emg_mama') || '';
+}
+
+function calcRemit() {
+  const jpy = parseFloat(document.getElementById('remit-jpy')?.value) || 50000;
+  const urgency = document.getElementById('remit-urgency')?.value || 'normal';
+  const fx = currentFX || 88;
+
+  // Wise計算
+  const wiseFee = Math.round(jpy * 0.004);
+  const wiseNet = jpy - wiseFee;
+  const wiseNZD = (wiseNet / fx).toFixed(2);
+
+  // Western Union
+  const wuFeeRate = urgency === 'critical' ? 0.05 : 0.04;
+  const wuFee = Math.round(jpy * wuFeeRate);
+  const wuNet = jpy - wuFee;
+  const wuNZD = (wuNet / fx).toFixed(2);
+
+  const urgencyText = {normal:'数時間〜翌日', urgent:'当日', critical:'30分以内'}[urgency];
+  const urgencyTextEn = {normal:'Hours–next day', urgent:'Today', critical:'Within 30 min'}[urgency];
+
+  const rt = document.getElementById('remit-result-text');
+  const rte = document.getElementById('remit-result-text-en');
+  if (rt) rt.innerHTML = `【Wise推奨】¥${jpy.toLocaleString()} → <strong>NZD $${wiseNZD}</strong>（手数料¥${wiseFee.toLocaleString()}、${urgencyText}）<br><small style="color:#e74c3c;">※Western Union の場合: NZD $${wuNZD}（手数料¥${wuFee.toLocaleString()}）</small>`;
+  if (rte) rte.innerHTML = `【Wise】¥${jpy.toLocaleString()} → <strong>NZD $${wiseNZD}</strong> (fee ¥${wiseFee.toLocaleString()}, ${urgencyTextEn})<br><small style="color:#e74c3c;">※Western Union: NZD $${wuNZD} (fee ¥${wuFee.toLocaleString()})</small>`;
+}
+
+// ==========================================
+// R-13: 親送金パネル
+// ==========================================
+function calcMamaPanel() {
+  const fx = currentFX || 88;
+  const WISE_RATE = 0.004;
+  const BANK_FEE_ANNUAL = 3000 * 12; // 銀行送金 年間コスト
+
+  const papaMon = parseFloat(document.getElementById('papa-monthly')?.value) || 90000;
+  const mamaMon = parseFloat(document.getElementById('mama-monthly')?.value) || 90000;
+
+  // ── お父さん ──
+  const papaWiseFee = Math.round(papaMon * WISE_RATE);
+  const papaNZD = ((papaMon - papaWiseFee) / fx).toFixed(0);
+  const papaAnnual = papaMon * 12;
+
+  // ── お母さん ──
+  const mamaWiseFee = Math.round(mamaMon * WISE_RATE);
+  const mamaNZD = ((mamaMon - mamaWiseFee) / fx).toFixed(0);
+  const mamaAnnual = mamaMon * 12;
+
+  // ── 合計（月次・年次） ──
+  const totalMon = papaMon + mamaMon;
+  const totalAnnual = totalMon * 12;
+  const totalWiseFee = (papaWiseFee + mamaWiseFee) * 12;
+  const wiseSaving = BANK_FEE_ANNUAL - totalWiseFee;
+  const totalNZDAnnual = (papaAnnual + mamaAnnual - totalWiseFee) / fx;
+
+  // ── 仕送り期間の計算（入学日 〜 NZ留学終了日） ──
+  const enrollValEl = document.getElementById('kgu-enroll-date');
+  const enrollVal = enrollValEl ? enrollValEl.value : '2026-04-01';
+  const enrollDate = new Date((enrollVal || '2026-04-01') + 'T00:00:00');
+
+  // NZ留学期間: 出発日から1年（12ヶ月）
+  const depDate = departureDate || new Date('2027-09-01T00:00:00');
+  const nzEndDate = new Date(depDate);
+  nzEndDate.setFullYear(nzEndDate.getFullYear() + 1);
+
+  // 仕送り月数 = 入学日からNZ終了日まで（端数は切り上げ）
+  const remitMonths = Math.max(1, Math.ceil(
+    (nzEndDate - enrollDate) / (1000 * 60 * 60 * 24 * 30.44)
+  ));
+
+  // NZ留学終了日の表示
+  const nzEndStr = nzEndDate.toLocaleDateString('ja-JP', { year:'numeric', month:'long', day:'numeric' });
+
+  // ── 総費用の計算（関学4年間 + NZ留学費用） ──
+  // KGU固定費: 学費¥5,796,500 + 航空券¥300,000 + 準備費¥150,000 = ¥6,246,500
+  const KGU_TOTAL_JPY = 6246500;
+  // NZ留学NZD費用 (1年分): 35000+18000+21600+2000+2400 = 79000 NZD
+  const NZ_NZD_TOTAL = 79000;
+  const NZ_JPY = Math.round(NZ_NZD_TOTAL * fx);
+  const combinedCost = KGU_TOTAL_JPY + NZ_JPY;
+
+  // 仕送り総額
+  const remitTotal = totalMon * remitMonths;
+
+  // カバー率
+  const coveragePct = Math.min(100, Math.round((remitTotal / combinedCost) * 100));
+
+  // ── 表示更新 ──
+  const setTxt = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = v; };
+  setTxt('papa-wise-fee', `−￥${papaWiseFee.toLocaleString()}`);
+  setTxt('papa-nzd', `NZD $${papaNZD}`);
+  setTxt('papa-annual', `￥${papaAnnual.toLocaleString()}`);
+  setTxt('mama-wise-fee', `−￥${mamaWiseFee.toLocaleString()}`);
+  setTxt('mama-nzd', `NZD $${mamaNZD}`);
+  setTxt('mama-annual', `￥${mamaAnnual.toLocaleString()}`);
+  setTxt('total-monthly', `￥${totalMon.toLocaleString()}`);
+  setTxt('total-annual', `￥${totalAnnual.toLocaleString()}`);
+  setTxt('wise-saving', wiseSaving > 0 ? `＋￥${wiseSaving.toLocaleString()} 節約` : `￥${Math.abs(wiseSaving).toLocaleString()}`);
+  setTxt('total-nzd-annual', `NZD $${Math.round(totalNZDAnnual).toLocaleString()}`);
+  setTxt('nz-end-date', nzEndStr);
+  setTxt('remit-months', remitMonths);
+  setTxt('remit-total', `￥${remitTotal.toLocaleString()}`);
+  setTxt('total-combined-cost', `￥${combinedCost.toLocaleString()} (KGU￥6,246,500 + NZ￥${NZ_JPY.toLocaleString()})`);
+  setTxt('remit-coverage', coveragePct + '%');
+
+  const bar = document.getElementById('mama-bar-fill');
+  if (bar) bar.style.width = Math.min(100, coveragePct) + '%';
+
+  // localStorage保存
+  localStorage.setItem('nanako_papa_mon', papaMon);
+  localStorage.setItem('nanako_mama_mon', mamaMon);
+  if (enrollVal) localStorage.setItem('nanako_kgu_enroll', enrollVal);
+}
+
+function loadMamaPanel() {
+  const papa = document.getElementById('papa-monthly');
+  const mama = document.getElementById('mama-monthly');
+  if (papa) papa.value = localStorage.getItem('nanako_papa_mon') || '90000';
+  if (mama) mama.value = localStorage.getItem('nanako_mama_mon') || '90000';
+  const enroll = document.getElementById('kgu-enroll-date');
+  if (enroll) enroll.value = localStorage.getItem('nanako_kgu_enroll') || '2026-04-01';
+  calcMamaPanel();
+}
+
+// ==========================================
+// R-14: 変更ログ
+// ==========================================
+const CL_MAX = 50;
+let changelogData = [];
+let clFilter = 'all';
+
+function loadChangeLog() {
+  try {
+    changelogData = JSON.parse(localStorage.getItem('nanako_changelog') || '[]');
+  } catch(e) { changelogData = []; }
+  renderChangeLog();
+}
+
+function logChange(fieldId, fieldNameJa, fieldNameEn, newValue, oldValue) {
+  const FIELD_MAP = {
+    'departure-date-input': {cat:'A', level:'🔴', emoji:'✈️'},
+    'fx-slider':            {cat:'B', level:'💱', emoji:'💱'},
+    'rp-days-input':        {cat:'A', level:'🟡', emoji:'🏠'},
+    'papa-monthly':         {cat:'B', level:'🟡', emoji:'👔'},
+    'mama-monthly':         {cat:'B', level:'🟡', emoji:'👩'},
+    'cost-tuition':         {cat:'B', level:'🟡', emoji:'📚'},
+    'cost-rent':            {cat:'B', level:'🟡', emoji:'🏠'},
+    'cost-living':          {cat:'B', level:'🟡', emoji:'🛒'},
+    'emg-papa-tel':         {cat:'D', level:'🟢', emoji:'📞'},
+    'emg-mama-tel':         {cat:'D', level:'🟢', emoji:'📞'},
+  };
+  const info = FIELD_MAP[fieldId] || {cat:'E', level:'🟢', emoji:'📝'};
+
+  const entry = {
+    id: Date.now(),
+    ts: new Date().toLocaleString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}),
+    cat: info.cat,
+    level: info.level,
+    emoji: info.emoji,
+    fieldJa: fieldNameJa,
+    fieldEn: fieldNameEn,
+    oldVal: oldValue !== undefined ? String(oldValue) : '',
+    newVal: String(newValue)
+  };
+
+  changelogData.unshift(entry);
+  if (changelogData.length > CL_MAX) changelogData = changelogData.slice(0, CL_MAX);
+  localStorage.setItem('nanako_changelog', JSON.stringify(changelogData));
+  renderChangeLog();
+}
+
+function renderChangeLog() {
+  const timeline = document.getElementById('cl-timeline');
+  if (!timeline) return;
+
+  const filtered = clFilter === 'all'
+    ? changelogData
+    : changelogData.filter(e => e.cat === clFilter);
+
+  document.getElementById('cl-log-count').textContent = filtered.length + '件';
+
+  if (filtered.length === 0) {
+    const isEn = document.body.classList.contains('mode-en');
+    timeline.innerHTML = isEn
+      ? '<div class="cl-empty">No changes recorded yet.</div>'
+      : '<div class="cl-empty">まだ変更履歴はありません。</div>';
+    return;
+  }
+
+  const isEn = document.body.classList.contains('mode-en');
+  timeline.innerHTML = filtered.map(e => `
+    <div class="cl-entry">
+      <div class="cl-time">${e.ts}</div>
+      <div class="cl-badge">${e.emoji}</div>
+      <div class="cl-field">
+        <strong>${isEn ? e.fieldEn : e.fieldJa}</strong>
+        ${e.oldVal ? `<div class="cl-diff"><span class="old-val">${e.oldVal}</span> → <span class="new-val">${e.newVal}</span></div>` : `<div class="cl-diff"><span class="new-val">${e.newVal}</span></div>`}
+      </div>
+      <div style="min-width:36px;text-align:center;">${e.level}</div>
+    </div>
+  `).join('');
+}
+
+function filterLog(btn, filter) {
+  clFilter = filter;
+  document.querySelectorAll('.cl-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderChangeLog();
+}
+
+function clearLog() {
+  if (!confirm('変更ログをすべてクリアしますか？\nClear all change logs?')) return;
+  changelogData = [];
+  localStorage.removeItem('nanako_changelog');
+  renderChangeLog();
+  showToast('🗑️ ログをクリアしました');
+}
+
+function exportLogCSV() {
+  if (changelogData.length === 0) { showToast('❌ ログがありません'); return; }
+  const header = '日時,カテゴリ,重要度,フィールド（日本語）,フィールド（英語）,変更前,変更後';
+  const rows = changelogData.map(e =>
+    [e.ts, e.cat, e.level, e.fieldJa, e.fieldEn, e.oldVal, e.newVal]
+    .map(v => '"' + String(v).replace(/"/g,'""') + '"').join(',')
+  );
+  const csv = '\uFEFF' + header + '\n' + rows.join('\n'); // BOM付きUTF-8
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const d = new Date();
+  a.download = 'nanako_changelog_' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0') + '.csv';
+  a.click();
+  showToast('📥 CSVを出力しました');
+}
+
+// ==========================================
+// 変更ログ監視（フィールドへのバインディング）
+// ==========================================
+function bindChangeLogListeners() {
+  const WATCH = [
+    {id:'departure-date-input', ja:'出発予定日', en:'Departure Date'},
+    {id:'rp-days-input',        ja:'一時帰国日数', en:'Return Trip Days'},
+    {id:'papa-monthly',         ja:'お父さん月次仕送り', en:'Father Monthly Remittance'},
+    {id:'mama-monthly',         ja:'お母さん月次仕送り', en:'Mother Monthly Remittance'},
+    {id:'cost-tuition',         ja:'授業料', en:'Tuition'},
+    {id:'cost-rent',            ja:'家賃', en:'Rent'},
+    {id:'cost-living',          ja:'生活費', en:'Living Costs'},
+  ];
+
+  WATCH.forEach(({id, ja, en}) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let prevVal = el.value;
+    el.addEventListener('change', function() {
+      if (this.value !== prevVal) {
+        logChange(id, ja, en, this.value, prevVal);
+        prevVal = this.value;
+      }
+    });
+  });
+
+  // 為替スライダー（手動操作時のみ）
+  const fxSlider = document.getElementById('fx-slider');
+  if (fxSlider) {
+    let prevFX = fxSlider.value;
+    fxSlider.addEventListener('change', function() {
+      if (this.value !== prevFX) {
+        logChange('fx-slider', '為替レート（手動設定）', 'FX Rate (manual)', this.value + ' ¥/NZD', prevFX + ' ¥/NZD');
+        prevFX = this.value;
+      }
+    });
+  }
+}
+
 </script>
 </body>
 </html>
